@@ -11,7 +11,7 @@
     "href": "resume.html#professional-experience",
     "title": "Resume",
     "section": "Professional Experience",
-    "text": "Professional Experience\n\n2024 – Present Staff Data Scientist, Airbnb\n\n\n2023 – 2024 Senior Economist, Amazon Delivery Experience\n\n\n2021 – 2023 Senior Economist, Amazon Fresh Grocery\n\n\n2020 – 2021 Economist II, Amazon Buyer Risk Prevention\n\n\n2017 – 2020 Policy Research Scientist, College Board"
+    "text": "Professional Experience\n\n2026 – Present Senior Data Scientist, Netflix\n\n\n2024 – 2026 Staff Data Scientist, Airbnb\n\n\n2023 – 2024 Senior Economist, Amazon Delivery Experience\n\n\n2021 – 2023 Senior Economist, Amazon Fresh Grocery\n\n\n2020 – 2021 Economist II, Amazon Buyer Risk Prevention\n\n\n2017 – 2020 Policy Research Scientist, College Board"
   },
   {
     "objectID": "resume.html#education",
@@ -25,7 +25,7 @@
     "href": "resume.html#trivia",
     "title": "Resume",
     "section": "Trivia",
-    "text": "Trivia\n\n\nGuest lecturer on causal inference at the University of Chicago and Singapore Management University.\n\n\nProud vibe-coder of two fun Android apps — see Projects."
+    "text": "Trivia\n\n\nGuest lecturer on causal inference at the University of Chicago and Singapore Management University."
   },
   {
     "objectID": "posts/sprt-vs-fixed-horizon/index.html",
@@ -158,7 +158,21 @@
     "href": "other-writings.html",
     "title": "Other Writings",
     "section": "",
-    "text": "Writing published elsewhere rather than hosted on this site. Currently a four-part series on Medium about how business judgment and statistical rigor combine to make good experimental design — shown here in the order they were written, since each one builds on the last.\n\n\nPart 1 of 4\n\nMaking Data-Driven Decisions: Navigating the Challenges of Business Experiments\nAUG 2, 2023\nOpens the series by laying out why experimentation matters for product and strategy decisions, and previews the hard questions — sample size, duration, and budget and time constraints — that the rest of the series works through one at a time.\n  Read on Medium \n\n\n\nPart 2 of 4\n\nExperimental Design: Evaluating your Business Risk and its Implications for Design\nAUG 17, 2023\nWalks through how to weigh the risk of a false positive against the risk of a false negative, and how that balance should shift depending on the business context you’re actually operating in.\n  Read on Medium \n\n\n\nPart 3 of 4\n\nExperimental Design’s Ever-Present Gremlin: Statistical Noise\nAUG 22, 2023\nDigs into why noise is unavoidable in experimental data and what that means practically for how confident you can be in a given result.\n  Read on Medium \n\n\n\nPart 4 of 4\n\nExperimental Design: Zeroing in on your Baseline and Expected Impact\nAUG 28, 2023\nCloses the series with how to set a defensible expected-impact estimate for your experiment, and why that number needs to be grounded in something more than a guess before it drives your minimum detectable effect.\n  Read on Medium"
+    "text": "Writing published elsewhere rather than hosted on this site."
+  },
+  {
+    "objectID": "other-writings.html#academic-publications",
+    "href": "other-writings.html#academic-publications",
+    "title": "Other Writings",
+    "section": "Academic Publications",
+    "text": "Academic Publications\n\nJournal Article\n\nAdmitting Students in Context: Field Experiments on Information Dashboards in College Admissions\n2022\nBastedo, M. N., Bell, D., Howell, J. S., Hsu, J., Hurwitz, M., Perfetto, G., & Welch, M. (2022). Admitting students in context: Field experiments on information dashboards in college admissions. The Journal of Higher Education, 93(3), 327–374. https://doi.org/10.1080/00221546.2021.1971488\n  View Article"
+  },
+  {
+    "objectID": "other-writings.html#medium-series",
+    "href": "other-writings.html#medium-series",
+    "title": "Other Writings",
+    "section": "Medium Series",
+    "text": "Medium Series\n\nA four-part series about how business judgment and statistical rigor combine to make good experimental design — shown here in the order they were written, since each one builds on the last.\n\n\nPart 1 of 4\n\nMaking Data-Driven Decisions: Navigating the Challenges of Business Experiments\nAUG 2, 2023\nOpens the series by laying out why experimentation matters for product and strategy decisions, and previews the hard questions — sample size, duration, and budget and time constraints — that the rest of the series works through one at a time.\n  Read on Medium \n\n\n\nPart 2 of 4\n\nExperimental Design: Evaluating your Business Risk and its Implications for Design\nAUG 17, 2023\nWalks through how to weigh the risk of a false positive against the risk of a false negative, and how that balance should shift depending on the business context you’re actually operating in.\n  Read on Medium \n\n\n\nPart 3 of 4\n\nExperimental Design’s Ever-Present Gremlin: Statistical Noise\nAUG 22, 2023\nDigs into why noise is unavoidable in experimental data and what that means practically for how confident you can be in a given result.\n  Read on Medium \n\n\n\nPart 4 of 4\n\nExperimental Design: Zeroing in on your Baseline and Expected Impact\nAUG 28, 2023\nCloses the series with how to set a defensible expected-impact estimate for your experiment, and why that number needs to be grounded in something more than a guess before it drives your minimum detectable effect.\n  Read on Medium"
   },
   {
     "objectID": "posts/msprt-vs-fixed-horizon/index.html",
