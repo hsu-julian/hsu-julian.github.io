@@ -1,0 +1,77 @@
+---
+title: "Other Writings"
+page-layout: article
+title-block-banner: false
+---
+
+<p style="max-width: 650px;">
+Writing published elsewhere rather than hosted on this site. Currently a
+four-part series on Medium about how business judgment and statistical
+rigor combine to make good experimental design — shown here in the order
+they were written, since each one builds on the last.
+</p>
+
+<div class="writing-entry">
+<span class="writing-number">Part 1 of 4</span>
+<div class="writing-body">
+### Making Data-Driven Decisions: Navigating the Challenges of Business Experiments
+<span class="writing-date">AUG 2, 2023</span>
+
+Opens the series by laying out why experimentation matters for
+product and strategy decisions, and previews the hard questions —
+sample size, duration, and budget and time constraints — that the
+rest of the series works through one at a time.
+
+<a class="site-pill" href="https://medium.com/@hjulian_73945/making-data-driven-decisions-navigating-the-challenges-of-business-experiments-84c3306810f4" target="_blank" rel="noopener">
+<i class="bi bi-box-arrow-up-right"></i> Read on Medium
+</a>
+</div>
+</div>
+
+<div class="writing-entry">
+<span class="writing-number">Part 2 of 4</span>
+<div class="writing-body">
+### Experimental Design: Evaluating your Business Risk and its Implications for Design
+<span class="writing-date">AUG 17, 2023</span>
+
+Walks through how to weigh the risk of a false positive against the
+risk of a false negative, and how that balance should shift depending
+on the business context you're actually operating in.
+
+<a class="site-pill" href="https://medium.com/@hjulian_73945/experimental-design-evaluating-your-business-risk-and-its-implications-for-design-4f61de9452cc" target="_blank" rel="noopener">
+<i class="bi bi-box-arrow-up-right"></i> Read on Medium
+</a>
+</div>
+</div>
+
+<div class="writing-entry">
+<span class="writing-number">Part 3 of 4</span>
+<div class="writing-body">
+### Experimental Design's Ever-Present Gremlin: Statistical Noise
+<span class="writing-date">AUG 22, 2023</span>
+
+Digs into why noise is unavoidable in experimental data and what that
+means practically for how confident you can be in a given result.
+
+<a class="site-pill" href="https://medium.com/@hjulian_73945/experimental-designs-ever-present-gremlin-statistical-noise-1140ab02f225" target="_blank" rel="noopener">
+<i class="bi bi-box-arrow-up-right"></i> Read on Medium
+</a>
+</div>
+</div>
+
+<div class="writing-entry">
+<span class="writing-number">Part 4 of 4</span>
+<div class="writing-body">
+### Experimental Design: Zeroing in on your Baseline and Expected Impact
+<span class="writing-date">AUG 28, 2023</span>
+
+Closes the series with how to set a defensible expected-impact
+estimate for your experiment, and why that number needs to be
+grounded in something more than a guess before it drives your
+minimum detectable effect.
+
+<a class="site-pill" href="https://medium.com/@hjulian_73945/experimental-design-zeroing-in-on-your-baseline-and-expected-impact-dc66808c82b2" target="_blank" rel="noopener">
+<i class="bi bi-box-arrow-up-right"></i> Read on Medium
+</a>
+</div>
+</div>

@@ -1,0 +1,13 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/msprt-vs-fixed-horizon/index.html",
+      "/posts/sprt-vs-fixed-horizon/index.html",
+      "/posts/preference-for-experimentation/index.html",
+      "/posts/propensity-scores/index.html",
+      "/posts/ols-gradient-descent/index.html",
+      "/posts/price-demand-elasticity/index.html"
+    ]
+  }
+]

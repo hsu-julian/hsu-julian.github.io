@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Julian Hsu</title>
+<link>https://hsu-julian.github.io/</link>
+<atom:link href="https://hsu-julian.github.io/index.xml" rel="self" type="application/rss+xml"/>
+<description>Economist &amp; Data Scientist</description>
+<generator>quarto-1.10.18</generator>
+<lastBuildDate>Wed, 10 Dec 2025 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Mixture SPRT: The Cost of Being Uncertain About Your Prior</title>
+  <dc:creator>Julian Hsu</dc:creator>
+  <link>https://hsu-julian.github.io/posts/msprt-vs-fixed-horizon/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="ai-disclaimer">
+<p>Written by AI following my writing style, based on the <a href="https://github.com/shoepaladin/causalinference_crashcourse/blob/main/OtherMaterial/SequentialTesting/1%20msprt_vs_fixed_horizon_testing.ipynb">source notebook</a>.</p>
+</div>
+<p>Walking blind into an A/B test is rarely a good idea. Your experiment benefits from your convictions about whether it will work — specifically, what the expected impact is, and how confident you are in it.</p>
+<p>In <a href="../sprt-vs-fixed-horizon/">a previous post</a>, I showed that one reason SPRT stops earlier than a fixed-horizon test is that it tests whether the true effect is a <em>single number</em>, rather than the more inclusive “not-zero.” <strong>Mixture SPRT (mSPRT) covers that gap</strong> by testing whether the true effect comes from a specific <em>distribution</em> instead of a single point.</p>
+<p>That sounds like it should be strictly better. It isn’t a silver bullet.</p>
+<section id="the-setup" class="level2">
+<h2 class="anchored" data-anchor-id="the-setup">The setup</h2>
+<p>Monte Carlo with 2,000 simulations, <img src="https://latex.codecogs.com/png.latex?%5Calpha%20=%200.05">, <img src="https://latex.codecogs.com/png.latex?%5Cbeta%20=%200.20">, a true effect of <img src="https://latex.codecogs.com/png.latex?%5Cmu%20=%200.01"> with <img src="https://latex.codecogs.com/png.latex?%5Csigma%20=%201">, and 200 observations per period. The comparison is between a fixed-horizon test (an oracle, designed for the true effect size) and three mSPRT specifications that differ <strong>only in the variance of the prior</strong>, all centered on the true effect:</p>
+<ul>
+<li><strong>Low variance</strong> — prior variance 0.0007</li>
+<li><strong>Medium variance</strong> — 1.5× the baseline</li>
+<li><strong>High variance</strong> — 2.5× the baseline</li>
+</ul>
+<p>Since all three priors are centered correctly, the only thing varying is <em>how confident</em> the test is about the effect size.</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>Avg. duration (<img src="https://latex.codecogs.com/png.latex?H_1">)</th>
+<th>Type II error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fixed-horizon</td>
+<td>310.0</td>
+<td>0.202</td>
+</tr>
+<tr class="even">
+<td>mSPRT, low variance</td>
+<td>300.8</td>
+<td>0.181</td>
+</tr>
+<tr class="odd">
+<td>mSPRT, medium variance</td>
+<td>253.6</td>
+<td>0.329</td>
+</tr>
+<tr class="even">
+<td>mSPRT, high variance</td>
+<td>182.3</td>
+<td>0.517</td>
+</tr>
+</tbody>
+</table>
+<p>The pattern is stark and monotonic. As prior variance increases, <strong>duration falls and false negatives rise</strong> — from a Type II error rate of 18% at low variance to <strong>52% at high variance</strong>. At that point the test is missing real effects more often than it detects them, while finishing in roughly 59% of the fixed-horizon time.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hsu-julian.github.io/posts/msprt-vs-fixed-horizon/images/msprt-1.png" class="img-fluid figure-img"></p>
+<figcaption>Fixed-horizon vs.&nbsp;mSPRT, as ratios of the fixed-horizon benchmark. Duration ratio falls with prior variance while the Type II error ratio climbs to 2.57×.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hsu-julian.github.io/posts/msprt-vs-fixed-horizon/images/msprt-2.png" class="img-fluid figure-img"></p>
+<figcaption>Duration densities when the alternative is true. Higher-variance priors concentrate mass at shorter durations, well before the fixed-horizon average (dashed line).</figcaption>
+</figure>
+</div>
+<p>Type I error, meanwhile, stays controlled across all specs — around 0.044. So this isn’t a test that’s silently broken; it’s correctly calibrated on the null and paying its cost entirely in power.</p>
+</section>
+<section id="why-does-this-happen" class="level2">
+<h2 class="anchored" data-anchor-id="why-does-this-happen">Why does this happen?</h2>
+<p>The wider the prior variance, the harder it is for the test to distinguish whether the data is more consistent with the null or the alternative. It’s genuinely difficult to tell the difference between <strong>“the effect could be almost anything”</strong> and <strong>“the effect is zero.”</strong> A diffuse prior over effect sizes puts meaningful mass near zero, so the likelihood ratio between the two hypotheses stays uninformative for longer — and when a boundary is finally crossed, it’s more often the wrong one.</p>
+</section>
+<section id="takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
+<p>mSPRT does finish before fixed-horizon tests, and it does relax SPRT’s awkward requirement that you name a single exact effect size. But the speed-up scales with how vague your prior is, and so does your false negative rate. <strong>The more uncertain you are about the treatment’s effect, the more likely you are to incorrectly conclude it does nothing.</strong></p>
+<p>The practical read: mSPRT rewards well-calibrated conviction. If you have a tight, defensible prior, you get modestly faster tests with slightly better power than fixed-horizon. If your prior is a shrug expressed as a distribution, a fixed-horizon test is the safer instrument.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Experiment Design</category>
+  <category>Sequential Testing</category>
+  <guid>https://hsu-julian.github.io/posts/msprt-vs-fixed-horizon/</guid>
+  <pubDate>Wed, 10 Dec 2025 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Why Sequential Tests Stop Early (It’s Not Just Peeking)</title>
+  <dc:creator>Julian Hsu</dc:creator>
+  <link>https://hsu-julian.github.io/posts/sprt-vs-fixed-horizon/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="ai-disclaimer">
+<p>Written by AI following my writing style, based on the <a href="https://github.com/shoepaladin/causalinference_crashcourse/blob/main/OtherMaterial/SequentialTesting/0%20sprt_vs_fixed_horizon_testing.ipynb">source notebook</a>.</p>
+</div>
+<p><strong>Sound byte</strong>: Everyone knows sequential testing lets you stop your experiment earlier. The usual reason given is that you get to peek at the data without p-hacking yourself. That is true, but it buries the bigger reason.</p>
+<p>This post simulates a Sequential Probability Ratio Test (SPRT) against the fixed-horizon z-test you already run, holding the data and the error targets fixed. I show that SPRT’s speed advantage comes largely from <strong>testing a different alternative hypothesis</strong> — and that the speed you gain shows up as unpredictability you have to manage.</p>
+<section id="the-two-tests-are-not-asking-the-same-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-two-tests-are-not-asking-the-same-question">The two tests are not asking the same question</h2>
+<p>Your fixed-horizon test asks whether the difference is anything at all — <img src="https://latex.codecogs.com/png.latex?H_1:%20%5Cmu%20%5Cneq%200">. SPRT asks whether the difference is <em>one specific number</em> — <img src="https://latex.codecogs.com/png.latex?H_1:%20%5Cmu%20=%20%5Cdelta">.</p>
+<p>That is a much stronger commitment, and it is where the speed comes from. SPRT puts all its eggs in one basket. If the true effect really is that number, you get to go home early. You are not being cleverer than the fixed-horizon test; you are answering an easier question because you brought more to the table before you started.</p>
+</section>
+<section id="how-the-comparison-works" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-comparison-works">How the comparison works</h2>
+<p>Both tests get the same data-generating process, the same number of users arriving each period, and the same targets for Type I and Type II error, across many simulated experiments.</p>
+<p>The fixed-horizon test is the one you already run: pick your sample size up front from a power calculation, wait, then look once.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0An%20=%20%5Cleft(%5Cfrac%7B(z_%5Calpha%20+%20z_%5Cbeta)%5C,%5Csigma%7D%7B%5Cdelta%7D%5Cright)%5E2%0A"></p>
+<p>SPRT is Wald’s sequential probability ratio test for normal means with known variance. Every period, you update the likelihood ratio comparing your two hypotheses and check it against two boundaries. Cross the top and you stop and declare an effect. Cross the bottom and you stop and declare nothing. Otherwise you keep collecting.</p>
+</section>
+<section id="what-the-simulations-show" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-simulations-show">What the simulations show</h2>
+<p><strong>Your error rates do not get worse.</strong> Both tests land on the Type I and Type II error you asked for. This is the part worth internalizing: you are not trading accuracy for speed.</p>
+<p>What you are buying is time. SPRT finishes in roughly <strong>half</strong> the fixed-horizon duration when there is no effect to find, and around <strong>two-thirds</strong> of it when there is one. Those are real savings on a real roadmap.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hsu-julian.github.io/posts/sprt-vs-fixed-horizon/images/sprt-1.png" class="img-fluid figure-img"></p>
+<figcaption>Distribution of SPRT stopping times against the fixed-horizon duration (red dashed line).</figcaption>
+</figure>
+</div>
+<p>Now look at that histogram before you get too excited. Most runs finish well left of the red line — but the right tail is long, and some runs go well past the fixed horizon before deciding anything.</p>
+<p>To be clear, that tail is the part that will actually bite you. Your fixed-horizon test gives you a date you can put on a roadmap. SPRT gives you a <em>distribution</em> of dates. The average is much better and the worst case is worse, and the person asking when your readout lands does not care about your average.</p>
+</section>
+<section id="what-this-means-for-your-next-test" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-means-for-your-next-test">What this means for your next test</h2>
+<p>The speed-up is not free, and it is not really about peeking. You pay for it by committing to a sharper alternative hypothesis before you start.</p>
+<p>So ask yourself whether you actually have that conviction. If you can say “I think this ships a 2% lift” and defend it, SPRT converts that belief into a shorter experiment. If you are honestly asking “does this do anything at all?”, you are not running the test SPRT was built for, and you should not expect to be rewarded for it.</p>
+<p>Of course, most of us are somewhere in between — you have a number in mind but you would not bet your quarter on it. So what happens when you have a belief about the effect size but real uncertainty around it? That is what mixture SPRT is for, and I run those simulations <a href="../msprt-vs-fixed-horizon/">in the next post</a>.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Experiment Design</category>
+  <category>Sequential Testing</category>
+  <guid>https://hsu-julian.github.io/posts/sprt-vs-fixed-horizon/</guid>
+  <pubDate>Sat, 15 Nov 2025 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Preference for Experimentation</title>
+  <dc:creator>Julian Hsu</dc:creator>
+  <link>https://hsu-julian.github.io/posts/preference-for-experimentation/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="ai-disclaimer">
+<p>Written by AI following my writing style, based on the <a href="https://github.com/shoepaladin/causalinference_crashcourse/blob/main/OtherNotebooks/Musings/Preference_for_Experimentation.ipynb">source notebook</a>.</p>
+</div>
+<section id="problem-setup" class="level2">
+<h2 class="anchored" data-anchor-id="problem-setup">Problem setup</h2>
+<p>Imagine running an experiment where, each round, you decide the proportion <img src="https://latex.codecogs.com/png.latex?p"> of users to assign to treatment. Treatment has a negative effect on the outcome — so the optimal policy is to assign everyone to control. The catch: the agent making this decision doesn’t know that upfront. It has to learn it from data, and every round it spends exploring costs it some reward.</p>
+<p>Both arms share the same within-arm noise <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">. The pooled outcome variance is:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BVar%7D(Y)%20=%20%5Csigma%5E2%20+%20p(1-p)(%5Ctilde%7B%5Cmu%7D_T%20-%20%5Ctilde%7B%5Cmu%7D_C)%5E2%0A"></p>
+<p>The between-arm term peaks at <img src="https://latex.codecogs.com/png.latex?p=0.5"> and vanishes at the corners (<img src="https://latex.codecogs.com/png.latex?p%20%5Cto%200"> or <img src="https://latex.codecogs.com/png.latex?p%20%5Cto%201">) — which is exactly why a purely variance-averse agent will always want to sit at a corner.</p>
+<section id="the-loss-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-loss-function">The loss function</h3>
+<p>The agent minimizes:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(p)%20=%20-%5Cunderbrace%7B%5Cbigl%5Bp%5Ctilde%7B%5Cmu%7D_T%20+%20(1-p)%5Ctilde%7B%5Cmu%7D_C%5Cbigr%5D%7D_%7B%5Ctext%7Bexpected%20reward%7D%7D%0A+%20%5Clambda%20%5Cunderbrace%7B%5Cbigl%5B%5Csigma%5E2%20+%20p(1-p)(%5Ctilde%7B%5Cmu%7D_T%20-%20%5Ctilde%7B%5Cmu%7D_C)%5E2%5Cbigr%5D%7D_%7B%5Ctext%7Boutcome%20variance%7D%7D%0A-%20%5Ceta%20%5Cunderbrace%7B%5Cfrac%7Bn%20%5Ccdot%20p(1-p)%7D%7B%5Csigma%5E2%7D%7D_%7B%5Ctext%7BFisher%20info%20for%20the%20ATE%7D%7D%0A"></p>
+<p>Two knobs control the agent’s personality:</p>
+<ul>
+<li><strong><img src="https://latex.codecogs.com/png.latex?%5Clambda"> (variance aversion)</strong> — penalizes outcome variance. High <img src="https://latex.codecogs.com/png.latex?%5Clambda"> pushes the agent toward corners, to kill the between-arm term.</li>
+<li><strong><img src="https://latex.codecogs.com/png.latex?%5Ceta"> (experimentation incentive)</strong> — rewards Fisher information about the treatment effect. High <img src="https://latex.codecogs.com/png.latex?%5Ceta"> pulls the agent back toward a balanced split, because that’s where the ATE is estimated most precisely.</li>
+</ul>
+</section>
+<section id="interior-vs.-corner-optimum" class="level3">
+<h3 class="anchored" data-anchor-id="interior-vs.-corner-optimum">Interior vs.&nbsp;corner optimum</h3>
+<p>The curvature of <img src="https://latex.codecogs.com/png.latex?L"> in <img src="https://latex.codecogs.com/png.latex?p"> tells you which force wins:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7Bd%5E2%20L%7D%7Bdp%5E2%7D%20=%20-2%5Clambda(%5Ctilde%7B%5Cmu%7D_T%20-%20%5Ctilde%7B%5Cmu%7D_C)%5E2%20+%20%5Cfrac%7B2%5Ceta%20n%7D%7B%5Csigma%5E2%7D%0A"></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Condition</th>
+<th>Curvature</th>
+<th>Optimal <img src="https://latex.codecogs.com/png.latex?p"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?%5Clambda%20%3E%20%5Clambda%5E*%20=%20%5Ceta%20n%20/%20(%5Csigma%5E2%20%5Ccdot%20%5Ctext%7Bgap%7D%5E2)"></td>
+<td>Negative (concave)</td>
+<td>Corner (0 or 1)</td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?%5Clambda%20%3C%20%5Clambda%5E*"></td>
+<td>Positive (convex)</td>
+<td>Interior (<img src="https://latex.codecogs.com/png.latex?%5Capprox%200.5">)</td>
+</tr>
+</tbody>
+</table>
+<p>With <img src="https://latex.codecogs.com/png.latex?n=50">, <img src="https://latex.codecogs.com/png.latex?%5Csigma=9">, true gap <img src="https://latex.codecogs.com/png.latex?=3">: <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E*%20=%20%5Ceta%20/%2014.58">.</p>
+</section>
+</section>
+<section id="thompson-sampling-for-arm-means" class="level2">
+<h2 class="anchored" data-anchor-id="thompson-sampling-for-arm-means">Thompson sampling for arm means</h2>
+<section id="why-point-estimates-arent-enough" class="level3">
+<h3 class="anchored" data-anchor-id="why-point-estimates-arent-enough">Why point estimates aren’t enough</h3>
+<p>Each round, the agent only observes a noisy sample mean <img src="https://latex.codecogs.com/png.latex?%5Cbar%7Bx%7D_%7Barm%7D"> per arm. When an arm has been visited infrequently — say 3 users per round go to treatment — that sample mean can be far from the truth:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BVar%7D(%5Cbar%7Bx%7D)%20=%20%5Cfrac%7B%5Csigma%5E2%7D%7Bn%7D%20%5Cqquad%20%5CRightarrow%20%5Cqquad%20%5Ctext%7BSE%7D(%5Cbar%7Bx%7D)%20=%20%5Cfrac%7B%5Csigma%7D%7B%5Csqrt%7Bn%7D%7D%0A"></p>
+<p>With <img src="https://latex.codecogs.com/png.latex?%5Csigma=9"> and <img src="https://latex.codecogs.com/png.latex?n=15"> (5 rounds at <img src="https://latex.codecogs.com/png.latex?p=0.05">): <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BSE%7D(%5Cbar%7BT%7D)%20%5Capprox%202.3">. That’s too noisy for the agent to be confident which arm is actually better. Plugging point estimates <img src="https://latex.codecogs.com/png.latex?(%5Cbar%7BT%7D,%20%5Cbar%7BC%7D)"> straight into the loss treats the agent as if it <em>knows</em> the arm means exactly — which causes it to commit to a corner before it has enough evidence.</p>
+</section>
+<section id="the-bayesian-posterior" class="level3">
+<h3 class="anchored" data-anchor-id="the-bayesian-posterior">The Bayesian posterior</h3>
+<p>Assume outcomes are normal with <strong>known</strong> within-arm noise <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">: <img src="https://latex.codecogs.com/png.latex?Y_i%5E%7B(arm)%7D%20%5Csim%20%5Cmathcal%7BN%7D(%5Cmu_%7Barm%7D,%20%5Csigma%5E2)">. Under a flat prior, after observing <img src="https://latex.codecogs.com/png.latex?n"> outcomes with sample mean <img src="https://latex.codecogs.com/png.latex?%5Cbar%7Bx%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmu_%7Barm%7D%20%5Cmid%20%5Ctext%7Bdata%7D%20%5Csim%20%5Cmathcal%7BN%7D%5C!%5Cleft(%5Cbar%7Bx%7D,%20%5Cfrac%7B%5Csigma%5E2%7D%7Bn%7D%5Cright)%0A"></p>
+<p>The posterior mean equals the sample mean, and the posterior spread shrinks toward zero as <img src="https://latex.codecogs.com/png.latex?n"> grows — the agent’s belief tightens with more data.</p>
+</section>
+<section id="the-decision-rule" class="level3">
+<h3 class="anchored" data-anchor-id="the-decision-rule">The decision rule</h3>
+<p>Instead of plugging <img src="https://latex.codecogs.com/png.latex?%5Cbar%20T"> and <img src="https://latex.codecogs.com/png.latex?%5Cbar%20C"> directly into the loss, the agent <strong>samples</strong> from the posteriors each round:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctilde%7B%5Cmu%7D_T%20%5Csim%20%5Cmathcal%7BN%7D%5C!%5Cleft(%5Cbar%7BT%7D,%20%5Cfrac%7B%5Csigma_T%5E2%7D%7Bn_T%7D%5Cright),%20%5Cqquad%0A%5Ctilde%7B%5Cmu%7D_C%20%5Csim%20%5Cmathcal%7BN%7D%5C!%5Cleft(%5Cbar%7BC%7D,%20%5Cfrac%7B%5Csigma_C%5E2%7D%7Bn_C%7D%5Cright)%0A"></p>
+<p>and evaluates the loss using <img src="https://latex.codecogs.com/png.latex?(%5Ctilde%5Cmu_T,%20%5Ctilde%5Cmu_C)"> in place of the raw sample means. Early on, posteriors are wide, so draws can flip the sign of <img src="https://latex.codecogs.com/png.latex?%5Ctilde%5Cmu_T%20-%20%5Ctilde%5Cmu_C"> — genuine exploration. As <img src="https://latex.codecogs.com/png.latex?n"> grows, draws cluster near the true means and the agent exploits. The feedback loop is what makes this interesting: the allocation chosen this round determines how fast next round’s posteriors tighten, so a high-<img src="https://latex.codecogs.com/png.latex?%5Clambda"> agent that commits early to treatment stays confidently wrong for longer, since it never collects enough control observations to correct itself.</p>
+</section>
+</section>
+<section id="simulation-results" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-results">Simulation results</h2>
+<p>I swept <img src="https://latex.codecogs.com/png.latex?%5Clambda"> (holding <img src="https://latex.codecogs.com/png.latex?%5Ceta=15">) and <img src="https://latex.codecogs.com/png.latex?%5Ceta"> (holding <img src="https://latex.codecogs.com/png.latex?%5Clambda=0.5">) over 20 rounds, 50 simulation runs each:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hsu-julian.github.io/posts/preference-for-experimentation/images/preference-experimentation-1.png" class="img-fluid figure-img"></p>
+<figcaption>Treatment allocation under a λ sweep (left) and an η sweep (right). Shaded bands are ±1 SD across runs.</figcaption>
+</figure>
+</div>
+<p>The left panel confirms the theory: past the <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E*%20%5Capprox%201.03"> threshold, agents collapse toward a corner. The right panel shows the mirror image — past <img src="https://latex.codecogs.com/png.latex?%5Ceta%5E*%20%5Capprox%207.3">, agents hold a meaningfully balanced split even though treatment is actively hurting their reward in the short run.</p>
+<p>That balance isn’t free. Here’s the cumulative reward cost of experimenting, for the <img src="https://latex.codecogs.com/png.latex?%5Clambda"> sweep:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hsu-julian.github.io/posts/preference-for-experimentation/images/preference-experimentation-2.png" class="img-fluid figure-img"></p>
+<figcaption>Cumulative reward under the λ sweep. The dashed line is the theoretical optimum (all-control); the dotted line is the worst case (all-treatment).</figcaption>
+</figure>
+</div>
+<p>Every curve sits between the two bounds — the price of experimentation is real, but bounded, and it buys the information needed to eventually converge on the right policy.</p>
+</section>
+<section id="faq-why-doesnt-a-pure-variance-penalty-work" class="level2">
+<h2 class="anchored" data-anchor-id="faq-why-doesnt-a-pure-variance-penalty-work">FAQ: why doesn’t a pure variance penalty work?</h2>
+<p>Set <img src="https://latex.codecogs.com/png.latex?%5Ceta%20=%200">. With Thompson-sampled means, the loss is:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(p)%20=%20-%5Cbigl%5Bp%5Ctilde%5Cmu_T%20+%20(1-p)%5Ctilde%5Cmu_C%5Cbigr%5D%20+%20%5Clambda%5CBigl%5B%5Csigma%5E2%20+%20p(1-p)(%5Ctilde%5Cmu_T-%5Ctilde%5Cmu_C)%5E2%5CBigr%5D%0A"></p>
+<p><strong>The loss is concave, so corners always win.</strong> <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%5E2%20L%7D%7Bdp%5E2%7D%20=%20-2%5Clambda(%5Ctilde%5Cmu_T-%5Ctilde%5Cmu_C)%5E2%20%5Cle%200"> everywhere — intermediate splits are never optimal, regardless of <img src="https://latex.codecogs.com/png.latex?%5Clambda">.</p>
+<p><strong><img src="https://latex.codecogs.com/png.latex?%5Clambda"> literally cancels out at the corners.</strong> The between-arm term <img src="https://latex.codecogs.com/png.latex?p(1-p)"> takes the same value at both extreme grid points (<img src="https://latex.codecogs.com/png.latex?0.05%5Ctimes%200.95%20=%0A0.95%20%5Ctimes%200.05%20=%200.0475">), so:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL(0.95)%20-%20L(0.05)%20=%200.9(%5Ctilde%5Cmu_C%20-%20%5Ctilde%5Cmu_T)%0A"></p>
+<p>Every <img src="https://latex.codecogs.com/png.latex?%5Clambda"> term drops out. The agent always picks whichever corner matches its current Thompson draw — <img src="https://latex.codecogs.com/png.latex?%5Clambda"> changes the <em>magnitude</em> of the loss, never the <em>allocation</em>.</p>
+<p><strong>Why the Fisher-information bonus fixes this.</strong> Adding <img src="https://latex.codecogs.com/png.latex?-%5Ceta%20%5Ccdot%20p(1-p)%20%5Ccdot%20n/%5Csigma%5E2"> changes the curvature to <img src="https://latex.codecogs.com/png.latex?-2%5Clambda(%5Ctilde%5Cmu_T-%5Ctilde%5Cmu_C)%5E2%20+%202%5Ceta%20n/%5Csigma%5E2">. When <img src="https://latex.codecogs.com/png.latex?%5Ceta%20n/%5Csigma%5E2%20%3E%20%5Clambda(%5Ctilde%5Cmu_T-%5Ctilde%5Cmu_C)%5E2">, the loss turns convex and an interior <img src="https://latex.codecogs.com/png.latex?p%5E*"> becomes optimal. Unlike the variance term, the information bonus doesn’t cancel at the corners relative to the center — so it’s the one lever that can make deliberate experimentation rational, and the ratio <img src="https://latex.codecogs.com/png.latex?%5Clambda/%5Ceta"> is what governs the exploit-vs-explore tradeoff.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Experiment Design</category>
+  <category>Optimization</category>
+  <guid>https://hsu-julian.github.io/posts/preference-for-experimentation/</guid>
+  <pubDate>Thu, 01 May 2025 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>All You Need Are Propensity Scores</title>
+  <dc:creator>Julian Hsu</dc:creator>
+  <link>https://hsu-julian.github.io/posts/propensity-scores/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="ai-disclaimer">
+<p>Written by AI following my writing style, based on the <a href="https://github.com/shoepaladin/causalinference_crashcourse/blob/main/OtherMaterial/Causal%20ML%20DML%20and%20Otherwise/All%20You%20Need%20Are%20Propensity%20Scores.ipynb">source notebook</a>.</p>
+</div>
+<p>Propensity scores are all you need — sometimes. Using simulated data, this post checks a classical result: <strong>controlling for the propensity score alone gets you the same unbiased treatment effect estimate as controlling for every confounder directly.</strong> That’s exactly what Rosenbaum &amp; Rubin (1983) proved theoretically. There’s still a catch, though — precision.</p>
+<section id="the-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="the-simulation">The simulation</h2>
+<p>Each dataset has <img src="https://latex.codecogs.com/png.latex?k"> confounders <img src="https://latex.codecogs.com/png.latex?X">, a binary treatment <img src="https://latex.codecogs.com/png.latex?w"> whose assignment probability depends on <img src="https://latex.codecogs.com/png.latex?X"> through a logistic model, and an outcome <img src="https://latex.codecogs.com/png.latex?y"> with a true treatment effect of exactly 1.0:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> simulate_data(n_samples, n_confounders):</span>
+<span id="cb1-2">    X <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.normal(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, (n_samples, n_confounders))</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">    propensity_coef <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.uniform(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, n_confounders)</span>
+<span id="cb1-5">    propensity_latent <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(propensity_coef.reshape(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, n_confounders), X.T)</span>
+<span id="cb1-6">    treatment_prob <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> np.exp(propensity_latent))</span>
+<span id="cb1-7">    treatment <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.random.binomial(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, treatment_prob).reshape(n_samples, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-8"></span>
+<span id="cb1-9">    true_effect <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span></span>
+<span id="cb1-10">    baseline_y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (np.random.uniform(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-11">                  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> np.dot(np.random.uniform(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, n_confounders).reshape(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, n_confounders), X.T)</span>
+<span id="cb1-12">                  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> np.random.normal(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, n_samples))</span>
+<span id="cb1-13">    outcome <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> baseline_y.T <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> true_effect <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> treatment</span>
+<span id="cb1-14">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> pd.DataFrame({<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span>{<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f'X_</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>: X[:, i] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(n_confounders)},</span>
+<span id="cb1-15">                          <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'w'</span>: treatment.flatten(), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'y'</span>: outcome.flatten()})</span></code></pre></div></div>
+<p>Four estimators are compared, all just OLS with a different set of controls:</p>
+<ul>
+<li><strong>naive</strong> — regress <img src="https://latex.codecogs.com/png.latex?y"> on <img src="https://latex.codecogs.com/png.latex?w"> alone (no controls at all).</li>
+<li><strong>X</strong> — regress on <img src="https://latex.codecogs.com/png.latex?w"> plus every confounder <img src="https://latex.codecogs.com/png.latex?X"> directly.</li>
+<li><strong>propensity score</strong> — estimate <img src="https://latex.codecogs.com/png.latex?%5Chat%7Be%7D(X)%20=%20P(w=1%5Cmid%20X)"> with logistic regression, then regress <img src="https://latex.codecogs.com/png.latex?y"> on <img src="https://latex.codecogs.com/png.latex?w"> plus that single scalar <img src="https://latex.codecogs.com/png.latex?%5Chat%20e(X)">.</li>
+<li><strong>X + propensity score</strong> — both, for comparison.</li>
+</ul>
+<p>Over 100 simulated datasets (<img src="https://latex.codecogs.com/png.latex?n=1000">, 4 confounders), each estimator’s coefficient on <img src="https://latex.codecogs.com/png.latex?w"> and its standard error are recorded.</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hsu-julian.github.io/posts/propensity-scores/images/propensity-scores-1.png" class="img-fluid figure-img"></p>
+<figcaption>Distribution of treatment-effect estimates (left) and standard errors (right), by control strategy.</figcaption>
+</figure>
+</div>
+<p>The <strong>naive</strong> estimator is badly biased — its distribution sits well above the true effect of 1.0, since it never accounts for confounding. Both <strong>controlling for X directly</strong> and <strong>controlling for the propensity score alone</strong> center tightly on the true effect of 1.0. That’s Rosenbaum &amp; Rubin’s result showing up empirically: the propensity score is a <em>balancing score</em>, so conditioning on it alone is enough to remove confounding bias, even though it throws away the individual <img src="https://latex.codecogs.com/png.latex?X"> variables.</p>
+<p>The right panel is where the two unbiased estimators diverge: <strong>controlling for X directly gives tighter standard errors than controlling for the propensity score alone.</strong> Collapsing <img src="https://latex.codecogs.com/png.latex?k"> confounders into a single scalar <img src="https://latex.codecogs.com/png.latex?%5Chat%20e(X)"> removes bias, but it also throws away information that would otherwise sharpen precision — you get unbiasedness essentially for free, but efficiency is not automatic.</p>
+</section>
+<section id="takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
+<p>If all you have is a well-estimated propensity score, you can still recover an unbiased average treatment effect. But if you have the underlying confounders too, controlling for them directly — or combining both — buys you real precision gains on top of that unbiasedness. Propensity scores are all you need for <strong>identification</strong>; they’re not the last word on <strong>efficiency</strong>.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Estimation</category>
+  <guid>https://hsu-julian.github.io/posts/propensity-scores/</guid>
+  <pubDate>Fri, 01 Nov 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>OLS via Gradient Descent and Matrix Inversion</title>
+  <dc:creator>Julian Hsu</dc:creator>
+  <link>https://hsu-julian.github.io/posts/ols-gradient-descent/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="ai-disclaimer">
+<p>Written by AI following my writing style, based on the <a href="https://github.com/shoepaladin/causalinference_crashcourse/blob/main/OtherMaterial/OLS%20via%20Gradient%20Descent%20and%20Matrix%20Inversion.ipynb">source notebook</a>.</p>
+</div>
+<p>How should we estimate ordinary least squares (OLS) models? OLS is a versatile tool in data science because it’s fast to compute and easy to interpret, and there are two common ways to get there:</p>
+<ol type="1">
+<li><strong>Matrix inversion</strong> — the econometrics-course approach: derive the analytical solution and estimate it in one calculation.</li>
+<li><strong>Gradient descent</strong> — the ML-course approach: use iterative optimization to converge on the parameters over many steps.</li>
+</ol>
+<p>To make the comparison fair, the gradient descent implementation here <strong>doesn’t get to use the analytical form of the gradient</strong> — it estimates the gradient numerically via finite differences, the way you’d have to if you were optimizing a loss function you couldn’t differentiate by hand.</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<p>The finite-difference gradient of the mean squared error, evaluated by nudging each parameter by a small <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> gradient_funct(f<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, e<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0001</span>):</span>
+<span id="cb1-2">    numerator <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> f(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> e) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> f(x)</span>
+<span id="cb1-3">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> numerator <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> e</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> rmse2_gradient(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, params<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>, e<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.00000000001</span>):</span>
+<span id="cb1-6">    gradient <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb1-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> p <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(params)):</span>
+<span id="cb1-8">        add_mod <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.zeros(<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(params))</span>
+<span id="cb1-9">        add_mod[p] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e</span>
+<span id="cb1-10">        rmse2_push <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.mean((np.dot(x.T, params <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> add_mod) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-11">        rmse2_base <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.mean((np.dot(x.T, params) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> y) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">**</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-12">        gradient.append((rmse2_push <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> rmse2_base) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> e)</span>
+<span id="cb1-13">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> np.array(gradient)</span></code></pre></div></div>
+<p>Gradient descent then repeatedly steps against this estimated gradient until the change per step falls below a tolerance:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> ols_gradient_descent(X, y, N, theta, learn_rate, num_iters, tolerance):</span>
+<span id="cb2-2">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.concatenate((np.ones((N, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)).T, X.T))</span>
+<span id="cb2-3">    theta_history <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [theta]</span>
+<span id="cb2-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">range</span>(num_iters):</span>
+<span id="cb2-5">        ols_grad <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> rmse2_gradient(x, y, theta_history[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])</span>
+<span id="cb2-6">        change_vector <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> learn_rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> ols_grad</span>
+<span id="cb2-7">        theta_history.append(theta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> change_vector)</span>
+<span id="cb2-8">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">min</span>(np.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">abs</span>(change_vector)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> tolerance:</span>
+<span id="cb2-9">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">break</span></span>
+<span id="cb2-10">        theta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> theta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> change_vector</span>
+<span id="cb2-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> theta</span></code></pre></div></div>
+<p>Matrix inversion, by contrast, gets there in one shot via the normal equations:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> ols_matrix(X, y, N):</span>
+<span id="cb3-2">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.concatenate((np.ones((N, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)).T, X.T))</span>
+<span id="cb3-3">    var <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.linalg.inv(np.dot(x, x.T))</span>
+<span id="cb3-4">    cov <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> np.dot(y, x.T)</span>
+<span id="cb3-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> np.dot(cov, var)</span></code></pre></div></div>
+</section>
+<section id="simulation-strategy" class="level2">
+<h2 class="anchored" data-anchor-id="simulation-strategy">Simulation strategy</h2>
+<p>Data is generated from a known ground truth (<img src="https://latex.codecogs.com/png.latex?y%20=%200.5%20+%201%5Ccdot%20x%20+%20%5Cvarepsilon">), so both estimators can be scored against the true intercept and slope. For each of 100 simulated datasets (<img src="https://latex.codecogs.com/png.latex?N=5000">), I fit matrix inversion once and gradient descent at four learning rates (0.01, 0.05, 0.1, 0.5), then compare the distribution of absolute error for each method against ground truth.</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hsu-julian.github.io/posts/ols-gradient-descent/images/ols-gradient-descent-2.png" class="img-fluid figure-img"></p>
+<figcaption>Distribution of absolute error for the intercept and slope, matrix inversion vs.&nbsp;gradient descent (learning rate = 0.5).</figcaption>
+</figure>
+</div>
+<p>The two methods perform <strong>similarly on the intercept</strong> — both distributions of error hug zero. But on the <strong>slope, matrix inversion clearly out-performs gradient descent</strong>: its errors cluster tighter to zero, while gradient descent’s error distribution has a longer tail even at its best learning rate. Numerical gradient estimation compounds a small amount of approximation error every iteration, and that error shows up disproportionately in the slope, since the intercept’s gradient direction is less sensitive to the finite-difference step size than the slope’s is.</p>
+</section>
+<section id="takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="takeaways">Takeaways</h2>
+<p>There are real gains from “doing the math.” In an era of cheap compute, it’s tempting to throw computational resources at a model without understanding how it works underneath. But working through the closed-form solution here surfaces exactly <em>why</em> gradient descent underperforms on the slope — and that kind of insight tends to pay for itself.</p>
+<p>That’s not an argument to throw gradient descent out, though. It’s the only option once you leave the world of models with closed-form solutions — LASSO regression being the obvious example. Matrix inversion wins this particular head-to-head, but it doesn’t scale to every model you’ll want to fit.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Estimation</category>
+  <category>Machine Learning</category>
+  <category>Optimization</category>
+  <guid>https://hsu-julian.github.io/posts/ols-gradient-descent/</guid>
+  <pubDate>Mon, 02 Sep 2024 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Price Demand Elasticity: Why Your Controls Can’t Save You</title>
+  <dc:creator>Julian Hsu</dc:creator>
+  <link>https://hsu-julian.github.io/posts/price-demand-elasticity/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="ai-disclaimer">
+<p>Written by AI following my writing style, based on the <a href="https://github.com/shoepaladin/causalinference_crashcourse/blob/main/OtherMaterial/Price%20Demand%20Elasticity%20Example.ipynb">source notebook</a>.</p>
+</div>
+<p>The objective here is to demonstrate that <strong>understanding the identifying variation behind an estimate is crucial for interpretation</strong>. The vehicle is a classical economics problem: estimating supply and demand price elasticity.</p>
+<p>The setup is a simulation, which means we know the right answer up front — the true demand price elasticity is <strong>-1.5</strong> and the true supply elasticity is <strong>0.5</strong>. That lets us score every estimation strategy against ground truth, rather than arguing about which one <em>looks</em> more reasonable.</p>
+<section id="the-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="the-simulation">The simulation</h2>
+<p>I simulate a supply and demand system driven by supply and demand cost shifters, plus unobserved variation in both. A non-linear solver finds the equilibrium price and quantity for each observation, and the unobserved shocks are allowed to correlate with the shifters — which is exactly the situation that makes naive estimation fail.</p>
+<p>Then comes the important restriction: <strong>suppose we only observe the equilibrium prices, quantities, and shifters.</strong> That’s the realistic data situation. What would a naive analyst estimate?</p>
+</section>
+<section id="reduced-form-ols-all-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="reduced-form-ols-all-wrong">Reduced-form OLS: all wrong</h2>
+<p>Four OLS specifications, adding controls in the way an analyst normally would:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Specification</th>
+<th>Estimate [SE]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No controls</td>
+<td>0.010 [0.036]</td>
+</tr>
+<tr class="even">
+<td>+ supply shifter</td>
+<td>0.120 [0.035]</td>
+</tr>
+<tr class="odd">
+<td>+ both shifters</td>
+<td>-0.562 [0.045]</td>
+</tr>
+<tr class="even">
+<td>+ demand shifter</td>
+<td>-0.702 [0.044]</td>
+</tr>
+<tr class="odd">
+<td><strong>True value</strong></td>
+<td><strong>-1.500</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Every one of them misses, and the first two don’t even get the <em>sign</em> right — they imply demand slopes upward. Adding more controls moves the estimate in the right direction, but “closer to the truth” isn’t the same as “unbiased,” and without knowing the answer you’d have no way to tell how far you still were.</p>
+</section>
+<section id="machine-learning-doesnt-fix-it-either" class="level2">
+<h2 class="anchored" data-anchor-id="machine-learning-doesnt-fix-it-either">Machine learning doesn’t fix it either</h2>
+<p>The natural next move is to reach for more flexible models. I ran a random forest regressor with cross-validated hyperparameters (5-fold CV over tree depth, minimum leaf size, and number of estimators), plus some rough feature engineering — indicators for whether the shifters exceed a threshold, and interactions between them.</p>
+<p>It doesn’t help. The problem isn’t functional form, and a more flexible conditional expectation of price given quantity doesn’t change that. The observed equilibrium points are generated by <em>both</em> curves moving at once, so no model that just predicts price from quantity — however flexible — can separate movement along the demand curve from movement of the demand curve itself.</p>
+</section>
+<section id="instrumental-variables-the-identifying-variation" class="level2">
+<h2 class="anchored" data-anchor-id="instrumental-variables-the-identifying-variation">Instrumental variables: the identifying variation</h2>
+<p>The fix is to find variation that moves <em>only one</em> curve. Instrumenting quantity with the <strong>supply shifter</strong> does exactly this: random variation in supply shifts the supply curve, which traces out points along a fixed demand curve. That’s the “experimental” variation we need — and it recovers <strong>-1.420 [0.133]</strong>, within sampling error of the true -1.5.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hsu-julian.github.io/posts/price-demand-elasticity/images/price-elasticity-1.png" class="img-fluid figure-img"></p>
+<figcaption>Estimated demand price elasticity by method, with ±1 SE bars. Only the IV estimate lands near the true value of -1.5. Chart built from the notebook’s reported results.</figcaption>
+</figure>
+</div>
+</section>
+<section id="takeaway" class="level2">
+<h2 class="anchored" data-anchor-id="takeaway">Takeaway</h2>
+<p>The lesson isn’t “IV good, OLS bad.” It’s that <strong>the estimator matters less than knowing which variation identifies your parameter.</strong> OLS with controls and a tuned random forest are both perfectly competent tools that produce confidently wrong answers here, because neither addresses the simultaneity that generated the data. When the data-generating process has structure — and economic data usually does — a method that imposes that structure will beat a method that ignores it, no matter how flexible the second one is.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Estimation</category>
+  <category>Machine Learning</category>
+  <guid>https://hsu-julian.github.io/posts/price-demand-elasticity/</guid>
+  <pubDate>Sat, 23 Nov 2019 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

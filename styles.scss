@@ -1,0 +1,116 @@
+/*-- scss:defaults --*/
+
+// ---- Palette -----------------------------------------------------
+// Paper:        #F6F5F1  (page background — warm, not cream-cliché)
+// Ink:          #16232B  (body text — near-black navy-charcoal)
+// Ledger Navy:  #1B3A4B  (primary accent — nav, headings, links)
+// Signal Teal:  #2E6F6E  (secondary accent — hover states, tag chips)
+// Data Gold:    #B8862B  (tertiary — used sparingly, e.g. tag counts)
+// Rule Gray:    #D8D5CC  (hairline dividers)
+
+$paper:   #F6F5F1;
+$ink:     #16232B;
+$navy:    #1B3A4B;
+$teal:    #2E6F6E;
+$gold:    #B8862B;
+$rule:    #D8D5CC;
+
+$body-bg: $paper;
+$body-color: $ink;
+$link-color: $teal;
+$link-hover-color: $navy;
+
+$navbar-bg: $navy;
+$navbar-fg: $paper;
+$navbar-hl: $gold;
+
+$font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-monospace: "IBM Plex Mono", ui-monospace, monospace;
+$headings-font-family: "Source Serif 4", Georgia, serif;
+$headings-color: $navy;
+$headings-font-weight: 600;
+
+$h1-font-size: 2.1rem;
+$h2-font-size: 1.5rem;
+$h3-font-size: 1.2rem;
+
+$border-color: $rule;
+$table-border-color: $rule;
+
+/*-- scss:rules --*/
+
+// Ledger rule under the navbar — the page's one hairline, used with intent
+.navbar {
+  border-bottom: 3px solid $navbar-hl;
+}
+
+.navbar-title {
+  font-family: $headings-font-family;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+// Post / listing titles in the serif display face
+#title-block-header .title,
+.quarto-title h1,
+.listing-title {
+  font-family: $headings-font-family;
+}
+
+// Metadata (dates, author) in mono — reads like a dataset field
+.quarto-title-meta-heading,
+.quarto-title-meta-contents,
+.listing-date,
+.quarto-title-banner .date {
+  font-family: $font-family-monospace;
+  font-size: 0.85rem;
+  color: mix($ink, $paper, 65%);
+}
+
+// Signature element: category tags styled as thin-bordered mono "field labels"
+// rather than filled Bootstrap badges — nods to both index cards and data tags.
+.quarto-listing-category,
+.listing-categories .listing-category,
+.quarto-category,
+d-byline .category {
+  font-family: $font-family-monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  border: 1px solid $rule;
+  border-radius: 3px;
+  padding: 0.15rem 0.5rem;
+  margin: 0 0.3rem 0.3rem 0;
+  display: inline-block;
+  color: $navy;
+  background: transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.quarto-listing-category:hover,
+.listing-categories .listing-category:hover,
+.quarto-category:hover {
+  border-color: $teal;
+  color: $teal;
+  cursor: pointer;
+}
+
+.quarto-listing-category.category-active,
+.listing-categories .listing-category.active {
+  border-color: $gold;
+  color: $gold;
+}
+
+// Cards / listing entries
+.quarto-post {
+  border-bottom: 1px solid $rule;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+// Footer
+.nav-footer {
+  font-family: $font-family-monospace;
+  font-size: 0.8rem;
+  color: mix($ink, $paper, 60%);
+}

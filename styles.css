@@ -1,0 +1,270 @@
+/* ---- Site-wide pill bar (tagline + LinkedIn/GitHub) -------------- */
+.site-pill-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid #D8D5CC;
+}
+
+.site-pill-tagline {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  color: #16232B99;
+}
+
+.site-pill-links {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.site-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #1B3A4B;
+  color: #1B3A4B !important;
+  text-decoration: none !important;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.site-pill:hover {
+  background: #1B3A4B;
+  color: #F6F5F1 !important;
+}
+
+/* ---- Project cards (Projects tab) -------------------------------- */
+.project-card {
+  border: 1px solid #D8D5CC;
+  border-radius: 6px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.project-card h3 {
+  margin-top: 0;
+}
+
+.project-card .project-highlights {
+  margin-top: 1rem;
+  padding-left: 1.1rem;
+}
+
+.project-card .project-highlights li {
+  margin-bottom: 0.5rem;
+}
+
+/* ---- AI authorship disclaimer (small bold line under post title) -- */
+.ai-disclaimer {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #16232B99;
+  margin: 0 0 1.5rem 0;
+}
+
+.ai-disclaimer a {
+  color: #2E6F6E;
+}
+
+/* ---- Resume: entries ---------------------------------------------- */
+/* Section headers (Professional Experience / Education / Trivia) already get
+   a hairline rule from the theme's h2 style. Entries themselves are clean —
+   no dividers between individual jobs or degrees. */
+.job-entry {
+  padding: 0.55rem 0;
+}
+.job-entry .job-title { font-weight: 600; }
+.job-entry .job-dates {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  color: #16232B99;
+  float: right;
+}
+
+.trivia-list li {
+  margin-bottom: 0.6rem;
+}
+
+/* ---- About page: bio header ------------------------------------ */
+.bio-header {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #D8D5CC;
+}
+
+.bio-header img {
+  width: 140px;
+  height: 140px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.bio-header .bio-text h1 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.bio-header .bio-tagline {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.9rem;
+  color: #2E6F6E;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .bio-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* ---- Presentations page: talk entries --------------------------- */
+.talk-entry {
+  border-bottom: 1px solid #D8D5CC;
+  padding: 1rem 0;
+}
+
+.talk-entry:last-child {
+  border-bottom: none;
+}
+
+.talk-entry .talk-venue {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  color: #16232B99;
+}
+
+.talk-entry .talk-links a {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  margin-right: 1rem;
+}
+
+/* ---- Links page: grid of cards ----------------------------------- */
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.link-card {
+  border: 1px solid #D8D5CC;
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  transition: border-color 0.15s ease;
+}
+
+.link-card:hover {
+  border-color: #2E6F6E;
+}
+
+.link-card .link-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #B8862B;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.link-card a {
+  font-weight: 500;
+}
+
+/* ---- Resume: Android app showcase -------------------------------- */
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+.app-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  border: 1px solid #D8D5CC;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.app-card img {
+  width: 96px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  border: 1px solid #D8D5CC;
+}
+
+.app-card .app-name {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #1B3A4B;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.app-card .app-meta p {
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+}
+
+/* ---- Other Writings: numbered series entries ---------------------- */
+.writing-entry {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  border: 1px solid #D8D5CC;
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.writing-number {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #F6F5F1;
+  background: #1B3A4B;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.writing-body h3 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  font-size: 1.05rem;
+}
+
+.writing-date {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  color: #16232B99;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+@media (max-width: 600px) {
+  .writing-entry {
+    flex-direction: column;
+  }
+}

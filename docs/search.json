@@ -1,0 +1,268 @@
+[
+  {
+    "objectID": "resume.html",
+    "href": "resume.html",
+    "title": "Resume",
+    "section": "",
+    "text": "Economist and Data Tech Enthusiast"
+  },
+  {
+    "objectID": "resume.html#professional-experience",
+    "href": "resume.html#professional-experience",
+    "title": "Resume",
+    "section": "Professional Experience",
+    "text": "Professional Experience\n\n2024 – Present Staff Data Scientist, Airbnb\n\n\n2023 – 2024 Senior Economist, Amazon Delivery Experience\n\n\n2021 – 2023 Senior Economist, Amazon Fresh Grocery\n\n\n2020 – 2021 Economist II, Amazon Buyer Risk Prevention\n\n\n2017 – 2020 Policy Research Scientist, College Board"
+  },
+  {
+    "objectID": "resume.html#education",
+    "href": "resume.html#education",
+    "title": "Resume",
+    "section": "Education",
+    "text": "Education\n\n2017 PhD in Economics, University of Michigan\n\n\n2011 BS with Honors in Industrial Labor Relations, Cornell University"
+  },
+  {
+    "objectID": "resume.html#trivia",
+    "href": "resume.html#trivia",
+    "title": "Resume",
+    "section": "Trivia",
+    "text": "Trivia\n\n\nGuest lecturer on causal inference at the University of Chicago and Singapore Management University.\n\n\nProud vibe-coder of two fun Android apps — see Projects."
+  },
+  {
+    "objectID": "posts/sprt-vs-fixed-horizon/index.html",
+    "href": "posts/sprt-vs-fixed-horizon/index.html",
+    "title": "Why Sequential Tests Stop Early (It’s Not Just Peeking)",
+    "section": "",
+    "text": "Written by AI following my writing style, based on the source notebook.\nSound byte: Everyone knows sequential testing lets you stop your experiment earlier. The usual reason given is that you get to peek at the data without p-hacking yourself. That is true, but it buries the bigger reason.\nThis post simulates a Sequential Probability Ratio Test (SPRT) against the fixed-horizon z-test you already run, holding the data and the error targets fixed. I show that SPRT’s speed advantage comes largely from testing a different alternative hypothesis — and that the speed you gain shows up as unpredictability you have to manage."
+  },
+  {
+    "objectID": "posts/sprt-vs-fixed-horizon/index.html#the-two-tests-are-not-asking-the-same-question",
+    "href": "posts/sprt-vs-fixed-horizon/index.html#the-two-tests-are-not-asking-the-same-question",
+    "title": "Why Sequential Tests Stop Early (It’s Not Just Peeking)",
+    "section": "The two tests are not asking the same question",
+    "text": "The two tests are not asking the same question\nYour fixed-horizon test asks whether the difference is anything at all — \\(H_1: \\mu \\neq 0\\). SPRT asks whether the difference is one specific number — \\(H_1: \\mu = \\delta\\).\nThat is a much stronger commitment, and it is where the speed comes from. SPRT puts all its eggs in one basket. If the true effect really is that number, you get to go home early. You are not being cleverer than the fixed-horizon test; you are answering an easier question because you brought more to the table before you started."
+  },
+  {
+    "objectID": "posts/sprt-vs-fixed-horizon/index.html#how-the-comparison-works",
+    "href": "posts/sprt-vs-fixed-horizon/index.html#how-the-comparison-works",
+    "title": "Why Sequential Tests Stop Early (It’s Not Just Peeking)",
+    "section": "How the comparison works",
+    "text": "How the comparison works\nBoth tests get the same data-generating process, the same number of users arriving each period, and the same targets for Type I and Type II error, across many simulated experiments.\nThe fixed-horizon test is the one you already run: pick your sample size up front from a power calculation, wait, then look once.\n\\[\nn = \\left(\\frac{(z_\\alpha + z_\\beta)\\,\\sigma}{\\delta}\\right)^2\n\\]\nSPRT is Wald’s sequential probability ratio test for normal means with known variance. Every period, you update the likelihood ratio comparing your two hypotheses and check it against two boundaries. Cross the top and you stop and declare an effect. Cross the bottom and you stop and declare nothing. Otherwise you keep collecting."
+  },
+  {
+    "objectID": "posts/sprt-vs-fixed-horizon/index.html#what-the-simulations-show",
+    "href": "posts/sprt-vs-fixed-horizon/index.html#what-the-simulations-show",
+    "title": "Why Sequential Tests Stop Early (It’s Not Just Peeking)",
+    "section": "What the simulations show",
+    "text": "What the simulations show\nYour error rates do not get worse. Both tests land on the Type I and Type II error you asked for. This is the part worth internalizing: you are not trading accuracy for speed.\nWhat you are buying is time. SPRT finishes in roughly half the fixed-horizon duration when there is no effect to find, and around two-thirds of it when there is one. Those are real savings on a real roadmap.\n\n\n\nDistribution of SPRT stopping times against the fixed-horizon duration (red dashed line).\n\n\nNow look at that histogram before you get too excited. Most runs finish well left of the red line — but the right tail is long, and some runs go well past the fixed horizon before deciding anything.\nTo be clear, that tail is the part that will actually bite you. Your fixed-horizon test gives you a date you can put on a roadmap. SPRT gives you a distribution of dates. The average is much better and the worst case is worse, and the person asking when your readout lands does not care about your average."
+  },
+  {
+    "objectID": "posts/sprt-vs-fixed-horizon/index.html#what-this-means-for-your-next-test",
+    "href": "posts/sprt-vs-fixed-horizon/index.html#what-this-means-for-your-next-test",
+    "title": "Why Sequential Tests Stop Early (It’s Not Just Peeking)",
+    "section": "What this means for your next test",
+    "text": "What this means for your next test\nThe speed-up is not free, and it is not really about peeking. You pay for it by committing to a sharper alternative hypothesis before you start.\nSo ask yourself whether you actually have that conviction. If you can say “I think this ships a 2% lift” and defend it, SPRT converts that belief into a shorter experiment. If you are honestly asking “does this do anything at all?”, you are not running the test SPRT was built for, and you should not expect to be rewarded for it.\nOf course, most of us are somewhere in between — you have a number in mind but you would not bet your quarter on it. So what happens when you have a belief about the effect size but real uncertainty around it? That is what mixture SPRT is for, and I run those simulations in the next post."
+  },
+  {
+    "objectID": "posts/price-demand-elasticity/index.html",
+    "href": "posts/price-demand-elasticity/index.html",
+    "title": "Price Demand Elasticity: Why Your Controls Can’t Save You",
+    "section": "",
+    "text": "Written by AI following my writing style, based on the source notebook.\nThe objective here is to demonstrate that understanding the identifying variation behind an estimate is crucial for interpretation. The vehicle is a classical economics problem: estimating supply and demand price elasticity.\nThe setup is a simulation, which means we know the right answer up front — the true demand price elasticity is -1.5 and the true supply elasticity is 0.5. That lets us score every estimation strategy against ground truth, rather than arguing about which one looks more reasonable."
+  },
+  {
+    "objectID": "posts/price-demand-elasticity/index.html#the-simulation",
+    "href": "posts/price-demand-elasticity/index.html#the-simulation",
+    "title": "Price Demand Elasticity: Why Your Controls Can’t Save You",
+    "section": "The simulation",
+    "text": "The simulation\nI simulate a supply and demand system driven by supply and demand cost shifters, plus unobserved variation in both. A non-linear solver finds the equilibrium price and quantity for each observation, and the unobserved shocks are allowed to correlate with the shifters — which is exactly the situation that makes naive estimation fail.\nThen comes the important restriction: suppose we only observe the equilibrium prices, quantities, and shifters. That’s the realistic data situation. What would a naive analyst estimate?"
+  },
+  {
+    "objectID": "posts/price-demand-elasticity/index.html#reduced-form-ols-all-wrong",
+    "href": "posts/price-demand-elasticity/index.html#reduced-form-ols-all-wrong",
+    "title": "Price Demand Elasticity: Why Your Controls Can’t Save You",
+    "section": "Reduced-form OLS: all wrong",
+    "text": "Reduced-form OLS: all wrong\nFour OLS specifications, adding controls in the way an analyst normally would:\n\n\n\nSpecification\nEstimate [SE]\n\n\n\n\nNo controls\n0.010 [0.036]\n\n\n+ supply shifter\n0.120 [0.035]\n\n\n+ both shifters\n-0.562 [0.045]\n\n\n+ demand shifter\n-0.702 [0.044]\n\n\nTrue value\n-1.500\n\n\n\nEvery one of them misses, and the first two don’t even get the sign right — they imply demand slopes upward. Adding more controls moves the estimate in the right direction, but “closer to the truth” isn’t the same as “unbiased,” and without knowing the answer you’d have no way to tell how far you still were."
+  },
+  {
+    "objectID": "posts/price-demand-elasticity/index.html#machine-learning-doesnt-fix-it-either",
+    "href": "posts/price-demand-elasticity/index.html#machine-learning-doesnt-fix-it-either",
+    "title": "Price Demand Elasticity: Why Your Controls Can’t Save You",
+    "section": "Machine learning doesn’t fix it either",
+    "text": "Machine learning doesn’t fix it either\nThe natural next move is to reach for more flexible models. I ran a random forest regressor with cross-validated hyperparameters (5-fold CV over tree depth, minimum leaf size, and number of estimators), plus some rough feature engineering — indicators for whether the shifters exceed a threshold, and interactions between them.\nIt doesn’t help. The problem isn’t functional form, and a more flexible conditional expectation of price given quantity doesn’t change that. The observed equilibrium points are generated by both curves moving at once, so no model that just predicts price from quantity — however flexible — can separate movement along the demand curve from movement of the demand curve itself."
+  },
+  {
+    "objectID": "posts/price-demand-elasticity/index.html#instrumental-variables-the-identifying-variation",
+    "href": "posts/price-demand-elasticity/index.html#instrumental-variables-the-identifying-variation",
+    "title": "Price Demand Elasticity: Why Your Controls Can’t Save You",
+    "section": "Instrumental variables: the identifying variation",
+    "text": "Instrumental variables: the identifying variation\nThe fix is to find variation that moves only one curve. Instrumenting quantity with the supply shifter does exactly this: random variation in supply shifts the supply curve, which traces out points along a fixed demand curve. That’s the “experimental” variation we need — and it recovers -1.420 [0.133], within sampling error of the true -1.5.\n\n\n\nEstimated demand price elasticity by method, with ±1 SE bars. Only the IV estimate lands near the true value of -1.5. Chart built from the notebook’s reported results."
+  },
+  {
+    "objectID": "posts/price-demand-elasticity/index.html#takeaway",
+    "href": "posts/price-demand-elasticity/index.html#takeaway",
+    "title": "Price Demand Elasticity: Why Your Controls Can’t Save You",
+    "section": "Takeaway",
+    "text": "Takeaway\nThe lesson isn’t “IV good, OLS bad.” It’s that the estimator matters less than knowing which variation identifies your parameter. OLS with controls and a tuned random forest are both perfectly competent tools that produce confidently wrong answers here, because neither addresses the simultaneity that generated the data. When the data-generating process has structure — and economic data usually does — a method that imposes that structure will beat a method that ignores it, no matter how flexible the second one is."
+  },
+  {
+    "objectID": "posts/ols-gradient-descent/index.html",
+    "href": "posts/ols-gradient-descent/index.html",
+    "title": "OLS via Gradient Descent and Matrix Inversion",
+    "section": "",
+    "text": "Written by AI following my writing style, based on the source notebook.\nHow should we estimate ordinary least squares (OLS) models? OLS is a versatile tool in data science because it’s fast to compute and easy to interpret, and there are two common ways to get there:\nTo make the comparison fair, the gradient descent implementation here doesn’t get to use the analytical form of the gradient — it estimates the gradient numerically via finite differences, the way you’d have to if you were optimizing a loss function you couldn’t differentiate by hand."
+  },
+  {
+    "objectID": "posts/ols-gradient-descent/index.html#setup",
+    "href": "posts/ols-gradient-descent/index.html#setup",
+    "title": "OLS via Gradient Descent and Matrix Inversion",
+    "section": "Setup",
+    "text": "Setup\nThe finite-difference gradient of the mean squared error, evaluated by nudging each parameter by a small \\(\\epsilon\\):\ndef gradient_funct(f=None, x=None, e=0.0001):\n    numerator = f(x + e) - f(x)\n    return numerator / e\n\ndef rmse2_gradient(x=None, y=None, params=None, e=0.00000000001):\n    gradient = []\n    for p in range(len(params)):\n        add_mod = np.zeros(len(params))\n        add_mod[p] = e\n        rmse2_push = np.mean((np.dot(x.T, params + add_mod) - y) ** 2)\n        rmse2_base = np.mean((np.dot(x.T, params) - y) ** 2)\n        gradient.append((rmse2_push - rmse2_base) / e)\n    return np.array(gradient)\nGradient descent then repeatedly steps against this estimated gradient until the change per step falls below a tolerance:\ndef ols_gradient_descent(X, y, N, theta, learn_rate, num_iters, tolerance):\n    x = np.concatenate((np.ones((N, 1)).T, X.T))\n    theta_history = [theta]\n    for i in range(num_iters):\n        ols_grad = rmse2_gradient(x, y, theta_history[-1])\n        change_vector = learn_rate * ols_grad\n        theta_history.append(theta - change_vector)\n        if np.min(np.abs(change_vector)) &lt; tolerance:\n            break\n        theta = theta - change_vector\n    return theta\nMatrix inversion, by contrast, gets there in one shot via the normal equations:\ndef ols_matrix(X, y, N):\n    x = np.concatenate((np.ones((N, 1)).T, X.T))\n    var = np.linalg.inv(np.dot(x, x.T))\n    cov = np.dot(y, x.T)\n    return np.dot(cov, var)"
+  },
+  {
+    "objectID": "posts/ols-gradient-descent/index.html#simulation-strategy",
+    "href": "posts/ols-gradient-descent/index.html#simulation-strategy",
+    "title": "OLS via Gradient Descent and Matrix Inversion",
+    "section": "Simulation strategy",
+    "text": "Simulation strategy\nData is generated from a known ground truth (\\(y = 0.5 + 1\\cdot x + \\varepsilon\\)), so both estimators can be scored against the true intercept and slope. For each of 100 simulated datasets (\\(N=5000\\)), I fit matrix inversion once and gradient descent at four learning rates (0.01, 0.05, 0.1, 0.5), then compare the distribution of absolute error for each method against ground truth."
+  },
+  {
+    "objectID": "posts/ols-gradient-descent/index.html#results",
+    "href": "posts/ols-gradient-descent/index.html#results",
+    "title": "OLS via Gradient Descent and Matrix Inversion",
+    "section": "Results",
+    "text": "Results\n\n\n\nDistribution of absolute error for the intercept and slope, matrix inversion vs. gradient descent (learning rate = 0.5).\n\n\nThe two methods perform similarly on the intercept — both distributions of error hug zero. But on the slope, matrix inversion clearly out-performs gradient descent: its errors cluster tighter to zero, while gradient descent’s error distribution has a longer tail even at its best learning rate. Numerical gradient estimation compounds a small amount of approximation error every iteration, and that error shows up disproportionately in the slope, since the intercept’s gradient direction is less sensitive to the finite-difference step size than the slope’s is."
+  },
+  {
+    "objectID": "posts/ols-gradient-descent/index.html#takeaways",
+    "href": "posts/ols-gradient-descent/index.html#takeaways",
+    "title": "OLS via Gradient Descent and Matrix Inversion",
+    "section": "Takeaways",
+    "text": "Takeaways\nThere are real gains from “doing the math.” In an era of cheap compute, it’s tempting to throw computational resources at a model without understanding how it works underneath. But working through the closed-form solution here surfaces exactly why gradient descent underperforms on the slope — and that kind of insight tends to pay for itself.\nThat’s not an argument to throw gradient descent out, though. It’s the only option once you leave the world of models with closed-form solutions — LASSO regression being the obvious example. Matrix inversion wins this particular head-to-head, but it doesn’t scale to every model you’ll want to fit."
+  },
+  {
+    "objectID": "personal.html",
+    "href": "personal.html",
+    "title": "Personal",
+    "section": "",
+    "text": "&lt;placeholder&gt;"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Causal Unicorn Blog",
+    "section": "",
+    "text": "Notes on causal inference, applied econometrics, and machine learning — written up as I work through them. Click a tag below to filter by theme.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMixture SPRT: The Cost of Being Uncertain About Your Prior\n\n\n\nExperiment Design\n\nSequential Testing\n\n\n\nmSPRT lets you test against a distribution of effect sizes instead of a single point. But the wider your prior, the faster you stop — and the more false negatives you make.\n\n\n\n\n\nDec 10, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nWhy Sequential Tests Stop Early (It’s Not Just Peeking)\n\n\n\nExperiment Design\n\nSequential Testing\n\n\n\nSequential testing stops earlier than a fixed-horizon test. The usual explanation is that you get to peek. The bigger reason is that it isn’t testing the same hypothesis.\n\n\n\n\n\nNov 15, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nPreference for Experimentation\n\n\n\nExperiment Design\n\nOptimization\n\n\n\nWhen does a reward-maximizing agent choose to explore instead of exploit? A loss function with a variance penalty and a Fisher-information bonus shows exactly where that tradeoff lives.\n\n\n\n\n\nMay 1, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nAll You Need Are Propensity Scores\n\n\n\nEstimation\n\n\n\nControlling for the propensity score alone recovers the same unbiased treatment effect as controlling for every confounder directly — a simulation check on Rosenbaum (1983), with a precision catch.\n\n\n\n\n\nNov 1, 2024\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nOLS via Gradient Descent and Matrix Inversion\n\n\n\nEstimation\n\nMachine Learning\n\nOptimization\n\n\n\nMatrix inversion and gradient descent both estimate OLS — but they don’t get there with equal accuracy. A head-to-head simulation on the intercept and the slope.\n\n\n\n\n\nSep 2, 2024\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nPrice Demand Elasticity: Why Your Controls Can’t Save You\n\n\n\nEstimation\n\nMachine Learning\n\n\n\nSimulating a supply-and-demand system shows that no amount of OLS controls — and no amount of machine learning — recovers the true price elasticity. Only an instrument does.\n\n\n\n\n\nNov 23, 2019\n\n\nJulian Hsu\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "other-writings.html",
+    "href": "other-writings.html",
+    "title": "Other Writings",
+    "section": "",
+    "text": "Writing published elsewhere rather than hosted on this site. Currently a four-part series on Medium about how business judgment and statistical rigor combine to make good experimental design — shown here in the order they were written, since each one builds on the last.\n\n\nPart 1 of 4\n\nMaking Data-Driven Decisions: Navigating the Challenges of Business Experiments\nAUG 2, 2023\nOpens the series by laying out why experimentation matters for product and strategy decisions, and previews the hard questions — sample size, duration, and budget and time constraints — that the rest of the series works through one at a time.\n  Read on Medium \n\n\n\nPart 2 of 4\n\nExperimental Design: Evaluating your Business Risk and its Implications for Design\nAUG 17, 2023\nWalks through how to weigh the risk of a false positive against the risk of a false negative, and how that balance should shift depending on the business context you’re actually operating in.\n  Read on Medium \n\n\n\nPart 3 of 4\n\nExperimental Design’s Ever-Present Gremlin: Statistical Noise\nAUG 22, 2023\nDigs into why noise is unavoidable in experimental data and what that means practically for how confident you can be in a given result.\n  Read on Medium \n\n\n\nPart 4 of 4\n\nExperimental Design: Zeroing in on your Baseline and Expected Impact\nAUG 28, 2023\nCloses the series with how to set a defensible expected-impact estimate for your experiment, and why that number needs to be grounded in something more than a guess before it drives your minimum detectable effect.\n  Read on Medium"
+  },
+  {
+    "objectID": "posts/msprt-vs-fixed-horizon/index.html",
+    "href": "posts/msprt-vs-fixed-horizon/index.html",
+    "title": "Mixture SPRT: The Cost of Being Uncertain About Your Prior",
+    "section": "",
+    "text": "Written by AI following my writing style, based on the source notebook.\nWalking blind into an A/B test is rarely a good idea. Your experiment benefits from your convictions about whether it will work — specifically, what the expected impact is, and how confident you are in it.\nIn a previous post, I showed that one reason SPRT stops earlier than a fixed-horizon test is that it tests whether the true effect is a single number, rather than the more inclusive “not-zero.” Mixture SPRT (mSPRT) covers that gap by testing whether the true effect comes from a specific distribution instead of a single point.\nThat sounds like it should be strictly better. It isn’t a silver bullet."
+  },
+  {
+    "objectID": "posts/msprt-vs-fixed-horizon/index.html#the-setup",
+    "href": "posts/msprt-vs-fixed-horizon/index.html#the-setup",
+    "title": "Mixture SPRT: The Cost of Being Uncertain About Your Prior",
+    "section": "The setup",
+    "text": "The setup\nMonte Carlo with 2,000 simulations, \\(\\alpha = 0.05\\), \\(\\beta = 0.20\\), a true effect of \\(\\mu = 0.01\\) with \\(\\sigma = 1\\), and 200 observations per period. The comparison is between a fixed-horizon test (an oracle, designed for the true effect size) and three mSPRT specifications that differ only in the variance of the prior, all centered on the true effect:\n\nLow variance — prior variance 0.0007\nMedium variance — 1.5× the baseline\nHigh variance — 2.5× the baseline\n\nSince all three priors are centered correctly, the only thing varying is how confident the test is about the effect size."
+  },
+  {
+    "objectID": "posts/msprt-vs-fixed-horizon/index.html#results",
+    "href": "posts/msprt-vs-fixed-horizon/index.html#results",
+    "title": "Mixture SPRT: The Cost of Being Uncertain About Your Prior",
+    "section": "Results",
+    "text": "Results\n\n\n\nTest\nAvg. duration (\\(H_1\\))\nType II error\n\n\n\n\nFixed-horizon\n310.0\n0.202\n\n\nmSPRT, low variance\n300.8\n0.181\n\n\nmSPRT, medium variance\n253.6\n0.329\n\n\nmSPRT, high variance\n182.3\n0.517\n\n\n\nThe pattern is stark and monotonic. As prior variance increases, duration falls and false negatives rise — from a Type II error rate of 18% at low variance to 52% at high variance. At that point the test is missing real effects more often than it detects them, while finishing in roughly 59% of the fixed-horizon time.\n\n\n\nFixed-horizon vs. mSPRT, as ratios of the fixed-horizon benchmark. Duration ratio falls with prior variance while the Type II error ratio climbs to 2.57×.\n\n\n\n\n\nDuration densities when the alternative is true. Higher-variance priors concentrate mass at shorter durations, well before the fixed-horizon average (dashed line).\n\n\nType I error, meanwhile, stays controlled across all specs — around 0.044. So this isn’t a test that’s silently broken; it’s correctly calibrated on the null and paying its cost entirely in power."
+  },
+  {
+    "objectID": "posts/msprt-vs-fixed-horizon/index.html#why-does-this-happen",
+    "href": "posts/msprt-vs-fixed-horizon/index.html#why-does-this-happen",
+    "title": "Mixture SPRT: The Cost of Being Uncertain About Your Prior",
+    "section": "Why does this happen?",
+    "text": "Why does this happen?\nThe wider the prior variance, the harder it is for the test to distinguish whether the data is more consistent with the null or the alternative. It’s genuinely difficult to tell the difference between “the effect could be almost anything” and “the effect is zero.” A diffuse prior over effect sizes puts meaningful mass near zero, so the likelihood ratio between the two hypotheses stays uninformative for longer — and when a boundary is finally crossed, it’s more often the wrong one."
+  },
+  {
+    "objectID": "posts/msprt-vs-fixed-horizon/index.html#takeaway",
+    "href": "posts/msprt-vs-fixed-horizon/index.html#takeaway",
+    "title": "Mixture SPRT: The Cost of Being Uncertain About Your Prior",
+    "section": "Takeaway",
+    "text": "Takeaway\nmSPRT does finish before fixed-horizon tests, and it does relax SPRT’s awkward requirement that you name a single exact effect size. But the speed-up scales with how vague your prior is, and so does your false negative rate. The more uncertain you are about the treatment’s effect, the more likely you are to incorrectly conclude it does nothing.\nThe practical read: mSPRT rewards well-calibrated conviction. If you have a tight, defensible prior, you get modestly faster tests with slightly better power than fixed-horizon. If your prior is a shrug expressed as a distribution, a fixed-horizon test is the safer instrument."
+  },
+  {
+    "objectID": "posts/preference-for-experimentation/index.html",
+    "href": "posts/preference-for-experimentation/index.html",
+    "title": "Preference for Experimentation",
+    "section": "",
+    "text": "Written by AI following my writing style, based on the source notebook."
+  },
+  {
+    "objectID": "posts/preference-for-experimentation/index.html#problem-setup",
+    "href": "posts/preference-for-experimentation/index.html#problem-setup",
+    "title": "Preference for Experimentation",
+    "section": "Problem setup",
+    "text": "Problem setup\nImagine running an experiment where, each round, you decide the proportion \\(p\\) of users to assign to treatment. Treatment has a negative effect on the outcome — so the optimal policy is to assign everyone to control. The catch: the agent making this decision doesn’t know that upfront. It has to learn it from data, and every round it spends exploring costs it some reward.\nBoth arms share the same within-arm noise \\(\\sigma^2\\). The pooled outcome variance is:\n\\[\n\\text{Var}(Y) = \\sigma^2 + p(1-p)(\\tilde{\\mu}_T - \\tilde{\\mu}_C)^2\n\\]\nThe between-arm term peaks at \\(p=0.5\\) and vanishes at the corners (\\(p \\to 0\\) or \\(p \\to 1\\)) — which is exactly why a purely variance-averse agent will always want to sit at a corner.\n\nThe loss function\nThe agent minimizes:\n\\[\nL(p) = -\\underbrace{\\bigl[p\\tilde{\\mu}_T + (1-p)\\tilde{\\mu}_C\\bigr]}_{\\text{expected reward}}\n+ \\lambda \\underbrace{\\bigl[\\sigma^2 + p(1-p)(\\tilde{\\mu}_T - \\tilde{\\mu}_C)^2\\bigr]}_{\\text{outcome variance}}\n- \\eta \\underbrace{\\frac{n \\cdot p(1-p)}{\\sigma^2}}_{\\text{Fisher info for the ATE}}\n\\]\nTwo knobs control the agent’s personality:\n\n\\(\\lambda\\) (variance aversion) — penalizes outcome variance. High \\(\\lambda\\) pushes the agent toward corners, to kill the between-arm term.\n\\(\\eta\\) (experimentation incentive) — rewards Fisher information about the treatment effect. High \\(\\eta\\) pulls the agent back toward a balanced split, because that’s where the ATE is estimated most precisely.\n\n\n\nInterior vs. corner optimum\nThe curvature of \\(L\\) in \\(p\\) tells you which force wins:\n\\[\n\\frac{d^2 L}{dp^2} = -2\\lambda(\\tilde{\\mu}_T - \\tilde{\\mu}_C)^2 + \\frac{2\\eta n}{\\sigma^2}\n\\]\n\n\n\n\n\n\n\n\nCondition\nCurvature\nOptimal \\(p\\)\n\n\n\n\n\\(\\lambda &gt; \\lambda^* = \\eta n / (\\sigma^2 \\cdot \\text{gap}^2)\\)\nNegative (concave)\nCorner (0 or 1)\n\n\n\\(\\lambda &lt; \\lambda^*\\)\nPositive (convex)\nInterior (\\(\\approx 0.5\\))\n\n\n\nWith \\(n=50\\), \\(\\sigma=9\\), true gap \\(=3\\): \\(\\lambda^* = \\eta / 14.58\\)."
+  },
+  {
+    "objectID": "posts/preference-for-experimentation/index.html#thompson-sampling-for-arm-means",
+    "href": "posts/preference-for-experimentation/index.html#thompson-sampling-for-arm-means",
+    "title": "Preference for Experimentation",
+    "section": "Thompson sampling for arm means",
+    "text": "Thompson sampling for arm means\n\nWhy point estimates aren’t enough\nEach round, the agent only observes a noisy sample mean \\(\\bar{x}_{arm}\\) per arm. When an arm has been visited infrequently — say 3 users per round go to treatment — that sample mean can be far from the truth:\n\\[\n\\text{Var}(\\bar{x}) = \\frac{\\sigma^2}{n} \\qquad \\Rightarrow \\qquad \\text{SE}(\\bar{x}) = \\frac{\\sigma}{\\sqrt{n}}\n\\]\nWith \\(\\sigma=9\\) and \\(n=15\\) (5 rounds at \\(p=0.05\\)): \\(\\text{SE}(\\bar{T}) \\approx 2.3\\). That’s too noisy for the agent to be confident which arm is actually better. Plugging point estimates \\((\\bar{T}, \\bar{C})\\) straight into the loss treats the agent as if it knows the arm means exactly — which causes it to commit to a corner before it has enough evidence.\n\n\nThe Bayesian posterior\nAssume outcomes are normal with known within-arm noise \\(\\sigma^2\\): \\(Y_i^{(arm)} \\sim \\mathcal{N}(\\mu_{arm}, \\sigma^2)\\). Under a flat prior, after observing \\(n\\) outcomes with sample mean \\(\\bar{x}\\):\n\\[\n\\mu_{arm} \\mid \\text{data} \\sim \\mathcal{N}\\!\\left(\\bar{x}, \\frac{\\sigma^2}{n}\\right)\n\\]\nThe posterior mean equals the sample mean, and the posterior spread shrinks toward zero as \\(n\\) grows — the agent’s belief tightens with more data.\n\n\nThe decision rule\nInstead of plugging \\(\\bar T\\) and \\(\\bar C\\) directly into the loss, the agent samples from the posteriors each round:\n\\[\n\\tilde{\\mu}_T \\sim \\mathcal{N}\\!\\left(\\bar{T}, \\frac{\\sigma_T^2}{n_T}\\right), \\qquad\n\\tilde{\\mu}_C \\sim \\mathcal{N}\\!\\left(\\bar{C}, \\frac{\\sigma_C^2}{n_C}\\right)\n\\]\nand evaluates the loss using \\((\\tilde\\mu_T, \\tilde\\mu_C)\\) in place of the raw sample means. Early on, posteriors are wide, so draws can flip the sign of \\(\\tilde\\mu_T - \\tilde\\mu_C\\) — genuine exploration. As \\(n\\) grows, draws cluster near the true means and the agent exploits. The feedback loop is what makes this interesting: the allocation chosen this round determines how fast next round’s posteriors tighten, so a high-\\(\\lambda\\) agent that commits early to treatment stays confidently wrong for longer, since it never collects enough control observations to correct itself."
+  },
+  {
+    "objectID": "posts/preference-for-experimentation/index.html#simulation-results",
+    "href": "posts/preference-for-experimentation/index.html#simulation-results",
+    "title": "Preference for Experimentation",
+    "section": "Simulation results",
+    "text": "Simulation results\nI swept \\(\\lambda\\) (holding \\(\\eta=15\\)) and \\(\\eta\\) (holding \\(\\lambda=0.5\\)) over 20 rounds, 50 simulation runs each:\n\n\n\nTreatment allocation under a λ sweep (left) and an η sweep (right). Shaded bands are ±1 SD across runs.\n\n\nThe left panel confirms the theory: past the \\(\\lambda^* \\approx 1.03\\) threshold, agents collapse toward a corner. The right panel shows the mirror image — past \\(\\eta^* \\approx 7.3\\), agents hold a meaningfully balanced split even though treatment is actively hurting their reward in the short run.\nThat balance isn’t free. Here’s the cumulative reward cost of experimenting, for the \\(\\lambda\\) sweep:\n\n\n\nCumulative reward under the λ sweep. The dashed line is the theoretical optimum (all-control); the dotted line is the worst case (all-treatment).\n\n\nEvery curve sits between the two bounds — the price of experimentation is real, but bounded, and it buys the information needed to eventually converge on the right policy."
+  },
+  {
+    "objectID": "posts/preference-for-experimentation/index.html#faq-why-doesnt-a-pure-variance-penalty-work",
+    "href": "posts/preference-for-experimentation/index.html#faq-why-doesnt-a-pure-variance-penalty-work",
+    "title": "Preference for Experimentation",
+    "section": "FAQ: why doesn’t a pure variance penalty work?",
+    "text": "FAQ: why doesn’t a pure variance penalty work?\nSet \\(\\eta = 0\\). With Thompson-sampled means, the loss is:\n\\[\nL(p) = -\\bigl[p\\tilde\\mu_T + (1-p)\\tilde\\mu_C\\bigr] + \\lambda\\Bigl[\\sigma^2 + p(1-p)(\\tilde\\mu_T-\\tilde\\mu_C)^2\\Bigr]\n\\]\nThe loss is concave, so corners always win. \\(\\frac{d^2 L}{dp^2} = -2\\lambda(\\tilde\\mu_T-\\tilde\\mu_C)^2 \\le 0\\) everywhere — intermediate splits are never optimal, regardless of \\(\\lambda\\).\n\\(\\lambda\\) literally cancels out at the corners. The between-arm term \\(p(1-p)\\) takes the same value at both extreme grid points (\\(0.05\\times 0.95 =\n0.95 \\times 0.05 = 0.0475\\)), so:\n\\[\nL(0.95) - L(0.05) = 0.9(\\tilde\\mu_C - \\tilde\\mu_T)\n\\]\nEvery \\(\\lambda\\) term drops out. The agent always picks whichever corner matches its current Thompson draw — \\(\\lambda\\) changes the magnitude of the loss, never the allocation.\nWhy the Fisher-information bonus fixes this. Adding \\(-\\eta \\cdot p(1-p) \\cdot n/\\sigma^2\\) changes the curvature to \\(-2\\lambda(\\tilde\\mu_T-\\tilde\\mu_C)^2 + 2\\eta n/\\sigma^2\\). When \\(\\eta n/\\sigma^2 &gt; \\lambda(\\tilde\\mu_T-\\tilde\\mu_C)^2\\), the loss turns convex and an interior \\(p^*\\) becomes optimal. Unlike the variance term, the information bonus doesn’t cancel at the corners relative to the center — so it’s the one lever that can make deliberate experimentation rational, and the ratio \\(\\lambda/\\eta\\) is what governs the exploit-vs-explore tradeoff."
+  },
+  {
+    "objectID": "posts/propensity-scores/index.html",
+    "href": "posts/propensity-scores/index.html",
+    "title": "All You Need Are Propensity Scores",
+    "section": "",
+    "text": "Written by AI following my writing style, based on the source notebook.\nPropensity scores are all you need — sometimes. Using simulated data, this post checks a classical result: controlling for the propensity score alone gets you the same unbiased treatment effect estimate as controlling for every confounder directly. That’s exactly what Rosenbaum & Rubin (1983) proved theoretically. There’s still a catch, though — precision."
+  },
+  {
+    "objectID": "posts/propensity-scores/index.html#the-simulation",
+    "href": "posts/propensity-scores/index.html#the-simulation",
+    "title": "All You Need Are Propensity Scores",
+    "section": "The simulation",
+    "text": "The simulation\nEach dataset has \\(k\\) confounders \\(X\\), a binary treatment \\(w\\) whose assignment probability depends on \\(X\\) through a logistic model, and an outcome \\(y\\) with a true treatment effect of exactly 1.0:\ndef simulate_data(n_samples, n_confounders):\n    X = np.random.normal(0, 1, (n_samples, n_confounders))\n\n    propensity_coef = np.random.uniform(0.5, 1, n_confounders)\n    propensity_latent = np.dot(propensity_coef.reshape(1, n_confounders), X.T)\n    treatment_prob = 1 / (1 + np.exp(propensity_latent))\n    treatment = np.random.binomial(1, treatment_prob).reshape(n_samples, 1)\n\n    true_effect = 1.0\n    baseline_y = (np.random.uniform(0, 1)\n                  + np.dot(np.random.uniform(-1, -0.5, n_confounders).reshape(1, n_confounders), X.T)\n                  + np.random.normal(0, 1, n_samples))\n    outcome = baseline_y.T + true_effect * treatment\n    return pd.DataFrame({**{f'X_{i}': X[:, i] for i in range(n_confounders)},\n                          'w': treatment.flatten(), 'y': outcome.flatten()})\nFour estimators are compared, all just OLS with a different set of controls:\n\nnaive — regress \\(y\\) on \\(w\\) alone (no controls at all).\nX — regress on \\(w\\) plus every confounder \\(X\\) directly.\npropensity score — estimate \\(\\hat{e}(X) = P(w=1\\mid X)\\) with logistic regression, then regress \\(y\\) on \\(w\\) plus that single scalar \\(\\hat e(X)\\).\nX + propensity score — both, for comparison.\n\nOver 100 simulated datasets (\\(n=1000\\), 4 confounders), each estimator’s coefficient on \\(w\\) and its standard error are recorded."
+  },
+  {
+    "objectID": "posts/propensity-scores/index.html#results",
+    "href": "posts/propensity-scores/index.html#results",
+    "title": "All You Need Are Propensity Scores",
+    "section": "Results",
+    "text": "Results\n\n\n\nDistribution of treatment-effect estimates (left) and standard errors (right), by control strategy.\n\n\nThe naive estimator is badly biased — its distribution sits well above the true effect of 1.0, since it never accounts for confounding. Both controlling for X directly and controlling for the propensity score alone center tightly on the true effect of 1.0. That’s Rosenbaum & Rubin’s result showing up empirically: the propensity score is a balancing score, so conditioning on it alone is enough to remove confounding bias, even though it throws away the individual \\(X\\) variables.\nThe right panel is where the two unbiased estimators diverge: controlling for X directly gives tighter standard errors than controlling for the propensity score alone. Collapsing \\(k\\) confounders into a single scalar \\(\\hat e(X)\\) removes bias, but it also throws away information that would otherwise sharpen precision — you get unbiasedness essentially for free, but efficiency is not automatic."
+  },
+  {
+    "objectID": "posts/propensity-scores/index.html#takeaway",
+    "href": "posts/propensity-scores/index.html#takeaway",
+    "title": "All You Need Are Propensity Scores",
+    "section": "Takeaway",
+    "text": "Takeaway\nIf all you have is a well-estimated propensity score, you can still recover an unbiased average treatment effect. But if you have the underlying confounders too, controlling for them directly — or combining both — buys you real precision gains on top of that unbiasedness. Propensity scores are all you need for identification; they’re not the last word on efficiency."
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "statanomics\n  View on GitHub \nA unified Python library for causal inference, where every estimator shares one API so swapping models is a single function-call change. It also ships diagnostics for checking the unconfoundedness and overlap assumptions causal inference depends on, even when there is no ground truth to validate against.\nWorth digging into:\n\n\nstnomics — the core package: ATE/ATET estimators (OLS, propensity binning, regression adjustment, double machine learning, doubly robust), heterogeneous treatment effect models, prediction QC, and bootstrap inference, all behind a shared syntax.\n\n\npanelib — the panel-data companion: hand-written synthetic control, difference-in-differences and synthetic DiD, event-study placebo testing, and conformal inference for panel settings.\n\n\n\n\ncausalinference_crashcourse\n  View on GitHub \nA from-scratch causal inference curriculum for scientists, built as a sequence of slide decks paired with companion Jupyter notebooks. It runs from potential-outcomes foundations through ATE/ATET estimators, inference, best practices, heterogeneous treatment effects, panel data, and regression discontinuity design.\nWorth digging into:\n\n\nRegression Discontinuity module — hand-codes local-linear estimation and pairs it with rdrobust/rddensity, plus a full validation battery (manipulation/density tests, covariate continuity, placebo cutoffs, bandwidth sensitivity).\n\n\nArguable Validation module — placebo testing and Oster (2013) coefficient-stability bounds for judging identification assumptions you can’t directly test.\n\n\n\n\nSeattle Area School Dashboard\n  View the Dashboard \nA static dashboard tracking school performance trends across eleven Puget Sound districts — Bainbridge Island, Bellevue, Central Kitsap, Issaquah, Lake Washington, Mercer Island, North Kitsap, Renton, Seattle, Snoqualmie Valley, and Vashon Island — covering the 2015-16 through 2024-25 school years. It pulls enrollment and demographics from the NCES Common Core of Data and assessment, growth, and graduation outcomes from Washington’s OSPI, the same underlying data that powers GreatSchools.org, then joins it into one static site with a PCA-based composite ranking across schools. Source and build pipeline are in data-flora on GitHub.\n\n\nkiwi-cup\n  View on GitHub \nA personal collection of fun side projects, built well outside the day job. It holds two vibe-coded Android apps plus a set of Pebble watchfaces.\nWorth digging into:\n\n\nclocktimer — a stopwatch and timer with no tabs at all: you tap the clock itself to switch between the two modes.\n\n\nwallpaper-rotator — build a deck of pictures and let your wallpaper rotate through them.\n\n\n\n\n\n\nclocktimer Repo & APK\n\n\n\n\n\nwallpaper-rotator Repo & APK"
+  }
+]
