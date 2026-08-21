@@ -1,0 +1,18 @@
+---
+title: "Causal Unicorn Blog"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  feed: true
+page-layout: full
+title-block-banner: false
+---
+
+<p style="max-width: 650px;">
+Notes on causal inference, applied econometrics, and machine learning —
+written up as I work through them. Click a tag below to filter by theme.
+</p>

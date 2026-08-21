@@ -1,0 +1,59 @@
+---
+title: "Resume"
+page-layout: article
+title-block-banner: false
+---
+
+<div class="bio-header">
+<img src="images/profile-placeholder.svg" alt="Julian Hsu">
+<div class="bio-text">
+# Julian Hsu
+<p class="bio-tagline">Economist and Data Tech Enthusiast</p>
+</div>
+</div>
+
+## Professional Experience
+
+<div class="job-entry">
+<span class="job-dates">2024 – Present</span>
+<span class="job-title">Staff Data Scientist</span>, Airbnb
+</div>
+
+<div class="job-entry">
+<span class="job-dates">2023 – 2024</span>
+<span class="job-title">Senior Economist</span>, Amazon Delivery Experience
+</div>
+
+<div class="job-entry">
+<span class="job-dates">2021 – 2023</span>
+<span class="job-title">Senior Economist</span>, Amazon Fresh Grocery
+</div>
+
+<div class="job-entry">
+<span class="job-dates">2020 – 2021</span>
+<span class="job-title">Economist II</span>, Amazon Buyer Risk Prevention
+</div>
+
+<div class="job-entry">
+<span class="job-dates">2017 – 2020</span>
+<span class="job-title">Policy Research Scientist</span>, College Board
+</div>
+
+## Education
+
+<div class="job-entry">
+<span class="job-dates">2017</span>
+<span class="job-title">PhD in Economics</span>, University of Michigan
+</div>
+
+<div class="job-entry">
+<span class="job-dates">2011</span>
+<span class="job-title">BS with Honors in Industrial Labor Relations</span>, Cornell University
+</div>
+
+## Trivia
+
+<ul class="trivia-list">
+<li>Guest lecturer on causal inference at the University of Chicago and Singapore Management University.</li>
+<li>Proud vibe-coder of two fun Android apps — see <a href="projects.html">Projects</a>.</li>
+</ul>
