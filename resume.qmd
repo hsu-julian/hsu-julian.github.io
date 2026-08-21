@@ -14,8 +14,14 @@ title-block-banner: false
 
 ## Professional Experience
 
+
 <div class="job-entry">
-<span class="job-dates">2024 – Present</span>
+<span class="job-dates">2026 – Present</span>
+<span class="job-title">Senior Data Scientist</span>, Netflix
+</div>
+
+<div class="job-entry">
+<span class="job-dates">2024 – 2026</span>
 <span class="job-title">Staff Data Scientist</span>, Airbnb
 </div>
 
@@ -55,5 +61,4 @@ title-block-banner: false
 
 <ul class="trivia-list">
 <li>Guest lecturer on causal inference at the University of Chicago and Singapore Management University.</li>
-<li>Proud vibe-coder of two fun Android apps — see <a href="projects.html">Projects</a>.</li>
-</ul>
+
