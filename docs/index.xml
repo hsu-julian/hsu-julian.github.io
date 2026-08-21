@@ -10,7 +10,7 @@
 <atom:link href="https://hsu-julian.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Economist &amp; Data Scientist</description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 10 Dec 2025 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 10 Dec 2025 08:00:00 GMT</lastBuildDate>
 <item>
   <title>Mixture SPRT: The Cost of Being Uncertain About Your Prior</title>
   <dc:creator>Julian Hsu</dc:creator>
@@ -100,7 +100,7 @@
   <category>Experiment Design</category>
   <category>Sequential Testing</category>
   <guid>https://hsu-julian.github.io/posts/msprt-vs-fixed-horizon/</guid>
-  <pubDate>Wed, 10 Dec 2025 00:00:00 GMT</pubDate>
+  <pubDate>Wed, 10 Dec 2025 08:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Why Sequential Tests Stop Early (It’s Not Just Peeking)</title>
@@ -154,7 +154,7 @@
   <category>Experiment Design</category>
   <category>Sequential Testing</category>
   <guid>https://hsu-julian.github.io/posts/sprt-vs-fixed-horizon/</guid>
-  <pubDate>Sat, 15 Nov 2025 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 15 Nov 2025 08:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Preference for Experimentation</title>
@@ -274,7 +274,7 @@
   <category>Experiment Design</category>
   <category>Optimization</category>
   <guid>https://hsu-julian.github.io/posts/preference-for-experimentation/</guid>
-  <pubDate>Thu, 01 May 2025 00:00:00 GMT</pubDate>
+  <pubDate>Thu, 01 May 2025 07:00:00 GMT</pubDate>
 </item>
 <item>
   <title>All You Need Are Propensity Scores</title>
@@ -431,7 +431,7 @@ font-style: inherit;">'y'</span>: outcome.flatten()})</span></code></pre></div><
  ]]></description>
   <category>Estimation</category>
   <guid>https://hsu-julian.github.io/posts/propensity-scores/</guid>
-  <pubDate>Fri, 01 Nov 2024 00:00:00 GMT</pubDate>
+  <pubDate>Fri, 01 Nov 2024 07:00:00 GMT</pubDate>
 </item>
 <item>
   <title>OLS via Gradient Descent and Matrix Inversion</title>
@@ -663,7 +663,7 @@ font-style: inherit;">return</span> np.dot(cov, var)</span></code></pre></div></
   <category>Machine Learning</category>
   <category>Optimization</category>
   <guid>https://hsu-julian.github.io/posts/ols-gradient-descent/</guid>
-  <pubDate>Mon, 02 Sep 2024 00:00:00 GMT</pubDate>
+  <pubDate>Mon, 02 Sep 2024 07:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Price Demand Elasticity: Why Your Controls Can’t Save You</title>
@@ -745,7 +745,7 @@ font-style: inherit;">return</span> np.dot(cov, var)</span></code></pre></div></
   <category>Estimation</category>
   <category>Machine Learning</category>
   <guid>https://hsu-julian.github.io/posts/price-demand-elasticity/</guid>
-  <pubDate>Sat, 23 Nov 2019 00:00:00 GMT</pubDate>
+  <pubDate>Sat, 23 Nov 2019 08:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
