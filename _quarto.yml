@@ -1,0 +1,57 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    - "posts/**/*.qmd"        # GitHub Pages will serve straight from /docs — no CI/Actions needed
+
+website:
+  title: "Julian Hsu"
+  description: "Economist & Data Scientist"
+  site-url: "https://hsu-julian.github.io"
+  favicon: images/favicon.png
+  navbar:
+    title: "Julian Hsu"
+    left:
+      - text: "Causal Unicorn Blog"
+        href: index.qmd
+      - text: "Other Writings"
+        href: other-writings.qmd
+      - text: "Projects"
+        href: projects.qmd
+      - text: "Resume"
+        href: resume.qmd
+      - text: "Personal"
+        href: personal.qmd
+    right:
+      - icon: github
+        href: https://github.com/shoepaladin
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/jhsuecon/
+        aria-label: LinkedIn
+      - icon: envelope-fill
+        href: mailto:hjulian@umich.edu
+        aria-label: Email
+  page-footer:
+    center: "© 2026 Julian Hsu · Built with Quarto"
+    border: false
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    css: styles.css
+    toc: false
+    page-layout: full
+    grid:
+      body-width: 850px
+    include-in-header:
+      - text: |
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+execute:
+  freeze: auto
