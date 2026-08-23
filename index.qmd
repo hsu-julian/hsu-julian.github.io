@@ -12,7 +12,16 @@ page-layout: full
 title-block-banner: false
 ---
 
-<p style="max-width: 650px;">
+<div class="home-hero">
+<div class="home-hero-copy">
+<p class="home-intro">
 Notes on causal inference, applied econometrics, and machine learning —
 written up as I work through them. Click a tag below to filter by theme.
 </p>
+<div class="home-actions">
+<a class="site-pill" href="posts/msprt-vs-fixed-horizon/">Latest Notes</a>
+<a class="site-pill" href="#listing-listing">All Writing</a>
+</div>
+</div>
+<img class="home-art" src="images/charcoal-causal-network.svg" alt="Abstract causal network rendered as a charcoal gallery artwork">
+</div>
