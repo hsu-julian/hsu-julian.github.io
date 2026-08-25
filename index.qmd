@@ -16,7 +16,7 @@ title-block-banner: false
 <div class="home-hero-copy">
 <p class="home-intro">
 Notes on causal inference, applied econometrics, and machine learning —
-written up as I work through them. Click a tag below to filter by theme.
+written up as I work through them. Click a tag on the right hand side to filter by theme.
 </p>
 <div class="home-actions">
 <a class="site-pill" href="posts/msprt-vs-fixed-horizon/">Latest Notes</a>
