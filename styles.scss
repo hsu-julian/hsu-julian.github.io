@@ -8,21 +8,24 @@
 // Data Gold:    #B8862B  (tertiary — used sparingly, e.g. tag counts)
 // Rule Gray:    #D8D5CC  (hairline dividers)
 
-$paper:   #F6F5F1;
-$ink:     #16232B;
-$navy:    #1B3A4B;
-$teal:    #2E6F6E;
-$gold:    #B8862B;
-$rule:    #D8D5CC;
+$paper:   #F2EFE4;
+$ink:     #2C3A33;
+$navy:    #3E6B54;
+$teal:    #395A48;
+$gold:    #A9764B;
+$rule:    #D8D2C0;
 
 $body-bg: $paper;
 $body-color: $ink;
-$link-color: $teal;
-$link-hover-color: $navy;
+$link-color: $navy;
+$link-hover-color: $teal;
 
 $navbar-bg: $navy;
-$navbar-fg: $paper;
+$navbar-fg: #F4F1E6;
 $navbar-hl: $gold;
+
+$headings-color: $navy;
+$border-color: $rule;
 
 $font-family-sans-serif: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 $font-family-monospace: "IBM Plex Mono", ui-monospace, monospace;
@@ -33,9 +36,6 @@ $headings-font-weight: 600;
 $h1-font-size: 2.1rem;
 $h2-font-size: 1.5rem;
 $h3-font-size: 1.2rem;
-
-$border-color: $rule;
-$table-border-color: $rule;
 
 /*-- scss:rules --*/
 
