@@ -4,7 +4,7 @@
     "href": "resume.html",
     "title": "Resume",
     "section": "",
-    "text": "Economist and Data Tech Enthusiast"
+    "text": "🚧 This site is a work in progress."
   },
   {
     "objectID": "resume.html#professional-experience",
@@ -32,7 +32,7 @@
     "href": "posts/sprt-vs-fixed-horizon/index.html",
     "title": "Why Sequential Tests Stop Early (It’s Not Just Peeking)",
     "section": "",
-    "text": "Written by AI following my writing style, based on the source notebook.\nSound byte: Everyone knows sequential testing lets you stop your experiment earlier. The usual reason given is that you get to peek at the data without p-hacking yourself. That is true, but it buries the bigger reason.\nThis post simulates a Sequential Probability Ratio Test (SPRT) against the fixed-horizon z-test you already run, holding the data and the error targets fixed. I show that SPRT’s speed advantage comes largely from testing a different alternative hypothesis — and that the speed you gain shows up as unpredictability you have to manage."
+    "text": "🚧 This site is a work in progress.\nSound byte: Everyone knows sequential testing lets you stop your experiment earlier. The usual reason given is that you get to peek at the data without p-hacking yourself. That is true, but it buries the bigger reason.\nThis post simulates a Sequential Probability Ratio Test (SPRT) against the fixed-horizon z-test you already run, holding the data and the error targets fixed. I show that SPRT’s speed advantage comes largely from testing a different alternative hypothesis — and that the speed you gain shows up as unpredictability you have to manage."
   },
   {
     "objectID": "posts/sprt-vs-fixed-horizon/index.html#the-two-tests-are-not-asking-the-same-question",
@@ -67,7 +67,7 @@
     "href": "posts/price-demand-elasticity/index.html",
     "title": "Price Demand Elasticity: Why Your Controls Can’t Save You",
     "section": "",
-    "text": "Written by AI following my writing style, based on the source notebook.\nThe objective here is to demonstrate that understanding the identifying variation behind an estimate is crucial for interpretation. The vehicle is a classical economics problem: estimating supply and demand price elasticity.\nThe setup is a simulation, which means we know the right answer up front — the true demand price elasticity is -1.5 and the true supply elasticity is 0.5. That lets us score every estimation strategy against ground truth, rather than arguing about which one looks more reasonable."
+    "text": "🚧 This site is a work in progress.\nThe objective here is to demonstrate that understanding the identifying variation behind an estimate is crucial for interpretation. The vehicle is a classical economics problem: estimating supply and demand price elasticity.\nThe setup is a simulation, which means we know the right answer up front — the true demand price elasticity is -1.5 and the true supply elasticity is 0.5. That lets us score every estimation strategy against ground truth, rather than arguing about which one looks more reasonable."
   },
   {
     "objectID": "posts/price-demand-elasticity/index.html#the-simulation",
@@ -109,7 +109,7 @@
     "href": "posts/ols-gradient-descent/index.html",
     "title": "OLS via Gradient Descent and Matrix Inversion",
     "section": "",
-    "text": "Written by AI following my writing style, based on the source notebook.\nHow should we estimate ordinary least squares (OLS) models? OLS is a versatile tool in data science because it’s fast to compute and easy to interpret, and there are two common ways to get there:\nTo make the comparison fair, the gradient descent implementation here doesn’t get to use the analytical form of the gradient — it estimates the gradient numerically via finite differences, the way you’d have to if you were optimizing a loss function you couldn’t differentiate by hand."
+    "text": "🚧 This site is a work in progress.\nHow should we estimate ordinary least squares (OLS) models? OLS is a versatile tool in data science because it’s fast to compute and easy to interpret, and there are two common ways to get there:\nTo make the comparison fair, the gradient descent implementation here doesn’t get to use the analytical form of the gradient — it estimates the gradient numerically via finite differences, the way you’d have to if you were optimizing a loss function you couldn’t differentiate by hand."
   },
   {
     "objectID": "posts/ols-gradient-descent/index.html#setup",
@@ -144,21 +144,21 @@
     "href": "personal.html",
     "title": "Personal",
     "section": "",
-    "text": "&lt;placeholder&gt;"
+    "text": "🚧 This site is a work in progress.\n\n\n\n\n&lt;placeholder&gt;"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Causal Unicorn Blog",
     "section": "",
-    "text": "Notes on causal inference, applied econometrics, and machine learning — written up as I work through them. Click a tag below to filter by theme.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMixture SPRT: The Cost of Being Uncertain About Your Prior\n\n\n\nExperiment Design\n\nSequential Testing\n\n\n\nmSPRT lets you test against a distribution of effect sizes instead of a single point. But the wider your prior, the faster you stop — and the more false negatives you make.\n\n\n\n\n\nDec 10, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nWhy Sequential Tests Stop Early (It’s Not Just Peeking)\n\n\n\nExperiment Design\n\nSequential Testing\n\n\n\nSequential testing stops earlier than a fixed-horizon test. The usual explanation is that you get to peek. The bigger reason is that it isn’t testing the same hypothesis.\n\n\n\n\n\nNov 15, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nPreference for Experimentation\n\n\n\nExperiment Design\n\nOptimization\n\n\n\nWhen does a reward-maximizing agent choose to explore instead of exploit? A loss function with a variance penalty and a Fisher-information bonus shows exactly where that tradeoff lives.\n\n\n\n\n\nMay 1, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nAll You Need Are Propensity Scores\n\n\n\nEstimation\n\n\n\nControlling for the propensity score alone recovers the same unbiased treatment effect as controlling for every confounder directly — a simulation check on Rosenbaum (1983), with a precision catch.\n\n\n\n\n\nNov 1, 2024\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nOLS via Gradient Descent and Matrix Inversion\n\n\n\nEstimation\n\nMachine Learning\n\nOptimization\n\n\n\nMatrix inversion and gradient descent both estimate OLS — but they don’t get there with equal accuracy. A head-to-head simulation on the intercept and the slope.\n\n\n\n\n\nSep 2, 2024\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nPrice Demand Elasticity: Why Your Controls Can’t Save You\n\n\n\nEstimation\n\nMachine Learning\n\n\n\nSimulating a supply-and-demand system shows that no amount of OLS controls — and no amount of machine learning — recovers the true price elasticity. Only an instrument does.\n\n\n\n\n\nNov 23, 2019\n\n\nJulian Hsu\n\n\n\n\n\nNo matching items"
+    "text": "🚧 This site is a work in progress.\n\n\n\n\n\n\n\nNotes on causal inference, applied econometrics, and machine learning — written up as I work through them.\n\n\nLatest Notes All Writing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMixture SPRT: The Cost of Being Uncertain About Your Prior\n\n\n\nExperiment Design\n\nSequential Testing\n\n\n\nmSPRT lets you test against a distribution of effect sizes instead of a single point. But the wider your prior, the faster you stop — and the more false negatives you make.\n\n\n\n\n\nDec 10, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nWhy Sequential Tests Stop Early (It’s Not Just Peeking)\n\n\n\nExperiment Design\n\nSequential Testing\n\n\n\nSequential testing stops earlier than a fixed-horizon test. The usual explanation is that you get to peek. The bigger reason is that it isn’t testing the same hypothesis.\n\n\n\n\n\nNov 15, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nPreference for Experimentation\n\n\n\nExperiment Design\n\nOptimization\n\n\n\nWhen does a reward-maximizing agent choose to explore instead of exploit? A loss function with a variance penalty and a Fisher-information bonus shows exactly where that tradeoff lives.\n\n\n\n\n\nMay 1, 2025\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nAll You Need Are Propensity Scores\n\n\n\nEstimation\n\n\n\nControlling for the propensity score alone recovers the same unbiased treatment effect as controlling for every confounder directly — a simulation check on Rosenbaum (1983), with a precision catch.\n\n\n\n\n\nNov 1, 2024\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nOLS via Gradient Descent and Matrix Inversion\n\n\n\nEstimation\n\nMachine Learning\n\nOptimization\n\n\n\nMatrix inversion and gradient descent both estimate OLS — but they don’t get there with equal accuracy. A head-to-head simulation on the intercept and the slope.\n\n\n\n\n\nSep 2, 2024\n\n\nJulian Hsu\n\n\n\n\n\n\n\n\n\n\n\n\nPrice Demand Elasticity: Why Your Controls Can’t Save You\n\n\n\nEstimation\n\nMachine Learning\n\n\n\nSimulating a supply-and-demand system shows that no amount of OLS controls — and no amount of machine learning — recovers the true price elasticity. Only an instrument does.\n\n\n\n\n\nNov 23, 2019\n\n\nJulian Hsu\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "other-writings.html",
     "href": "other-writings.html",
     "title": "Other Writings",
     "section": "",
-    "text": "Writing published elsewhere rather than hosted on this site."
+    "text": "🚧 This site is a work in progress.\nWriting published elsewhere rather than hosted on this site."
   },
   {
     "objectID": "other-writings.html#academic-publications",
@@ -179,7 +179,7 @@
     "href": "posts/msprt-vs-fixed-horizon/index.html",
     "title": "Mixture SPRT: The Cost of Being Uncertain About Your Prior",
     "section": "",
-    "text": "Written by AI following my writing style, based on the source notebook.\nWalking blind into an A/B test is rarely a good idea. Your experiment benefits from your convictions about whether it will work — specifically, what the expected impact is, and how confident you are in it.\nIn a previous post, I showed that one reason SPRT stops earlier than a fixed-horizon test is that it tests whether the true effect is a single number, rather than the more inclusive “not-zero.” Mixture SPRT (mSPRT) covers that gap by testing whether the true effect comes from a specific distribution instead of a single point.\nThat sounds like it should be strictly better. It isn’t a silver bullet."
+    "text": "🚧 This site is a work in progress.\nWalking blind into an A/B test is rarely a good idea. Your experiment benefits from your convictions about whether it will work — specifically, what the expected impact is, and how confident you are in it.\nIn a previous post, I showed that one reason SPRT stops earlier than a fixed-horizon test is that it tests whether the true effect is a single number, rather than the more inclusive “not-zero.” Mixture SPRT (mSPRT) covers that gap by testing whether the true effect comes from a specific distribution instead of a single point.\nThat sounds like it should be strictly better. It isn’t a silver bullet."
   },
   {
     "objectID": "posts/msprt-vs-fixed-horizon/index.html#the-setup",
@@ -214,7 +214,7 @@
     "href": "posts/preference-for-experimentation/index.html",
     "title": "Preference for Experimentation",
     "section": "",
-    "text": "Written by AI following my writing style, based on the source notebook."
+    "text": "🚧 This site is a work in progress."
   },
   {
     "objectID": "posts/preference-for-experimentation/index.html#problem-setup",
@@ -249,7 +249,7 @@
     "href": "posts/propensity-scores/index.html",
     "title": "All You Need Are Propensity Scores",
     "section": "",
-    "text": "Written by AI following my writing style, based on the source notebook.\nPropensity scores are all you need — sometimes. Using simulated data, this post checks a classical result: controlling for the propensity score alone gets you the same unbiased treatment effect estimate as controlling for every confounder directly. That’s exactly what Rosenbaum & Rubin (1983) proved theoretically. There’s still a catch, though — precision."
+    "text": "🚧 This site is a work in progress.\nPropensity scores are all you need — sometimes. Using simulated data, this post checks a classical result: controlling for the propensity score alone gets you the same unbiased treatment effect estimate as controlling for every confounder directly. That’s exactly what Rosenbaum & Rubin (1983) proved theoretically. There’s still a catch, though — precision."
   },
   {
     "objectID": "posts/propensity-scores/index.html#the-simulation",
@@ -277,6 +277,6 @@
     "href": "projects.html",
     "title": "Projects",
     "section": "",
-    "text": "statanomics\n  View on GitHub \nA unified Python library for causal inference, where every estimator shares one API so swapping models is a single function-call change. It also ships diagnostics for checking the unconfoundedness and overlap assumptions causal inference depends on, even when there is no ground truth to validate against.\nWorth digging into:\n\n\nstnomics — the core package: ATE/ATET estimators (OLS, propensity binning, regression adjustment, double machine learning, doubly robust), heterogeneous treatment effect models, prediction QC, and bootstrap inference, all behind a shared syntax.\n\n\npanelib — the panel-data companion: hand-written synthetic control, difference-in-differences and synthetic DiD, event-study placebo testing, and conformal inference for panel settings.\n\n\n\n\ncausalinference_crashcourse\n  View on GitHub \nA from-scratch causal inference curriculum for scientists, built as a sequence of slide decks paired with companion Jupyter notebooks. It runs from potential-outcomes foundations through ATE/ATET estimators, inference, best practices, heterogeneous treatment effects, panel data, and regression discontinuity design.\nWorth digging into:\n\n\nRegression Discontinuity module — hand-codes local-linear estimation and pairs it with rdrobust/rddensity, plus a full validation battery (manipulation/density tests, covariate continuity, placebo cutoffs, bandwidth sensitivity).\n\n\nArguable Validation module — placebo testing and Oster (2013) coefficient-stability bounds for judging identification assumptions you can’t directly test.\n\n\n\n\nSeattle Area School Dashboard\n  View the Dashboard \nA static dashboard tracking school performance trends across eleven Puget Sound districts — Bainbridge Island, Bellevue, Central Kitsap, Issaquah, Lake Washington, Mercer Island, North Kitsap, Renton, Seattle, Snoqualmie Valley, and Vashon Island — covering the 2015-16 through 2024-25 school years. It pulls enrollment and demographics from the NCES Common Core of Data and assessment, growth, and graduation outcomes from Washington’s OSPI, the same underlying data that powers GreatSchools.org, then joins it into one static site with a PCA-based composite ranking across schools. Source and build pipeline are in data-flora on GitHub.\n\n\nkiwi-cup\n  View on GitHub \nA personal collection of fun side projects, built well outside the day job. It holds two vibe-coded Android apps plus a set of Pebble watchfaces.\nWorth digging into:\n\n\nclocktimer — a stopwatch and timer with no tabs at all: you tap the clock itself to switch between the two modes.\n\n\nwallpaper-rotator — build a deck of pictures and let your wallpaper rotate through them.\n\n\n\n\n\n\nclocktimer Repo & APK\n\n\n\n\n\nwallpaper-rotator Repo & APK"
+    "text": "🚧 This site is a work in progress.\n\n\n\n\n\nstatanomics\n  View on GitHub \nA unified Python library for causal inference, where every estimator shares one API so swapping models is a single function-call change. It also ships diagnostics for checking the unconfoundedness and overlap assumptions causal inference depends on, even when there is no ground truth to validate against.\nWorth digging into:\n\n\nstnomics — the core package: ATE/ATET estimators (OLS, propensity binning, regression adjustment, double machine learning, doubly robust), heterogeneous treatment effect models, prediction QC, and bootstrap inference, all behind a shared syntax.\n\n\npanelib — the panel-data companion: hand-written synthetic control, difference-in-differences and synthetic DiD, event-study placebo testing, and conformal inference for panel settings.\n\n\n\n\ncausalinference_crashcourse\n  View on GitHub \nA from-scratch causal inference curriculum for scientists, built as a sequence of slide decks paired with companion Jupyter notebooks. It runs from potential-outcomes foundations through ATE/ATET estimators, inference, best practices, heterogeneous treatment effects, panel data, and regression discontinuity design.\nWorth digging into:\n\n\nRegression Discontinuity module — hand-codes local-linear estimation and pairs it with rdrobust/rddensity, plus a full validation battery (manipulation/density tests, covariate continuity, placebo cutoffs, bandwidth sensitivity).\n\n\nArguable Validation module — placebo testing and Oster (2013) coefficient-stability bounds for judging identification assumptions you can’t directly test.\n\n\n\n\nSeattle Area School Dashboard\n  View the Dashboard \nA static dashboard tracking school performance trends across eleven Puget Sound districts — Bainbridge Island, Bellevue, Central Kitsap, Issaquah, Lake Washington, Mercer Island, North Kitsap, Renton, Seattle, Snoqualmie Valley, and Vashon Island — covering the 2015-16 through 2024-25 school years. It pulls enrollment and demographics from the NCES Common Core of Data and assessment, growth, and graduation outcomes from Washington’s OSPI, the same underlying data that powers GreatSchools.org, then joins it into one static site with a PCA-based composite ranking across schools. Source and build pipeline are in data-flora on GitHub.\n\n\nkiwi-cup\n  View on GitHub \nA personal collection of fun side projects, built well outside the day job. It holds two vibe-coded Android apps plus a set of Pebble watchfaces.\nWorth digging into:\n\n\nclocktimer — a stopwatch and timer with no tabs at all: you tap the clock itself to switch between the two modes.\n\n\nwallpaper-rotator — build a deck of pictures and let your wallpaper rotate through them.\n\n\n\n\n\n\nclocktimer Repo & APK\n\n\n\n\n\nwallpaper-rotator Repo & APK"
   }
 ]

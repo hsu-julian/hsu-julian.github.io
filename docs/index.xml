@@ -16,6 +16,7 @@
   <dc:creator>Julian Hsu</dc:creator>
   <link>https://hsu-julian.github.io/posts/msprt-vs-fixed-horizon/</link>
   <description><![CDATA[ 
+<div class="wip-banner">🚧 This site is a work in progress.</div>
 
 
 
@@ -107,6 +108,7 @@
   <dc:creator>Julian Hsu</dc:creator>
   <link>https://hsu-julian.github.io/posts/sprt-vs-fixed-horizon/</link>
   <description><![CDATA[ 
+<div class="wip-banner">🚧 This site is a work in progress.</div>
 
 
 
@@ -161,6 +163,7 @@
   <dc:creator>Julian Hsu</dc:creator>
   <link>https://hsu-julian.github.io/posts/preference-for-experimentation/</link>
   <description><![CDATA[ 
+<div class="wip-banner">🚧 This site is a work in progress.</div>
 
 
 
@@ -281,6 +284,7 @@
   <dc:creator>Julian Hsu</dc:creator>
   <link>https://hsu-julian.github.io/posts/propensity-scores/</link>
   <description><![CDATA[ 
+<div class="wip-banner">🚧 This site is a work in progress.</div>
 
 
 
@@ -438,6 +442,7 @@ font-style: inherit;">'y'</span>: outcome.flatten()})</span></code></pre></div><
   <dc:creator>Julian Hsu</dc:creator>
   <link>https://hsu-julian.github.io/posts/ols-gradient-descent/</link>
   <description><![CDATA[ 
+<div class="wip-banner">🚧 This site is a work in progress.</div>
 
 
 
@@ -670,6 +675,7 @@ font-style: inherit;">return</span> np.dot(cov, var)</span></code></pre></div></
   <dc:creator>Julian Hsu</dc:creator>
   <link>https://hsu-julian.github.io/posts/price-demand-elasticity/</link>
   <description><![CDATA[ 
+<div class="wip-banner">🚧 This site is a work in progress.</div>
 
 
 
