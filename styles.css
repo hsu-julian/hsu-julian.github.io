@@ -60,7 +60,10 @@ body:has(.home-hero)::before { --banner-h: 46rem; }
 
 @media (max-width: 640px) {
   :root { --banner-h: 18rem; }
-  body:has(.home-hero)::before { --banner-h: 58rem; }
+  /* Measured at 390px: hero copy ends ~625px, listing starts ~693px —
+     46rem (736px) lets the scrim finish fading just as the cards begin.
+     Re-measure if the title or intro copy changes. */
+  body:has(.home-hero)::before { --banner-h: 46rem; }
 }
 
 ::selection { background: var(--accent); color: var(--bg); }
@@ -234,7 +237,10 @@ hr { border-color: var(--border); opacity: 1; }
 /* The margin sidebar's grid area overlaps the whole content row, which
    left the category chips floating across the title block. On desktop,
    push the chips down so they sit just below the title, inside the
-   banner. Mobile already stacks them below the content. */
+   banner. Mobile already stacks them below the content.
+   This must clear the title block's rendered height (h1 clamp +
+   #title-block-header padding/margin, ~line 118). Re-check if either
+   changes — currently tuned to ~8.5rem at desktop widths. */
 @media (min-width: 992px) {
   body:has(.home-hero) #quarto-margin-sidebar { margin-top: 8.5rem; }
 }
