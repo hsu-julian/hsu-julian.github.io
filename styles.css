@@ -25,6 +25,44 @@ body {
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
+/* ---- Top banner: hero artwork behind navbar + wip-banner + intro ---
+   A fixed pseudo-element paints the jade network image across the top of
+   every page, dissolving into the page background via a gradient scrim.
+   The band is taller on the homepage so the title block and .home-hero
+   copy also sit inside it. ------------------------------------------- */
+:root { --banner-h: 21rem; }
+
+body::before {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(14, 32, 24, 0.82) 0%,
+      rgba(14, 32, 24, 0.68) 40%,
+      rgba(20, 44, 33, 0.55) 62%,
+      rgba(242, 239, 228, 0.55) 86%,
+      var(--bg) 100%
+    ),
+    url("images/jade-causal-network-v2-hero.jpg");
+  background-position: center top, center top;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 100% 100%, cover;
+  content: "";
+  height: var(--banner-h);
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+body:has(.home-hero)::before { --banner-h: 46rem; }
+
+@media (max-width: 640px) {
+  :root { --banner-h: 18rem; }
+  body:has(.home-hero)::before { --banner-h: 58rem; }
+}
+
 ::selection { background: var(--accent); color: var(--bg); }
 
 a {
@@ -44,8 +82,8 @@ button:focus-visible,
 }
 
 #quarto-header {
-  background: var(--accent) !important;
-  border-bottom: 1px solid var(--accent-hover);
+  background: transparent !important;
+  border-bottom: 0;
 }
 
 .navbar {
@@ -79,7 +117,7 @@ button:focus-visible,
 
 #title-block-header,
 .quarto-title-block {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(244, 241, 230, 0.35);
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
 }
@@ -93,6 +131,13 @@ h1, .h1 {
   font-weight: 400;
   letter-spacing: -0.065em;
   line-height: 0.95;
+}
+
+/* The title block sits inside the top banner, so it needs light text. */
+#title-block-header .title,
+.quarto-title h1 {
+  color: #F4F1E6;
+  text-shadow: 0 2px 14px rgba(14, 32, 24, 0.45);
 }
 
 h2, .h2 {
@@ -133,21 +178,29 @@ hr { border-color: var(--border); opacity: 1; }
   text-transform: uppercase;
 }
 
+/* Title metadata also lives inside the top banner. */
+#title-block-header .quarto-title-meta-heading,
+#title-block-header .quarto-title-meta-contents,
+#title-block-header .date {
+  color: rgba(244, 241, 230, 0.78) !important;
+}
+
 /* ---- Hero section ------------------------------------------------- */
+/* The artwork is now the top banner background (see body::before), so
+   the hero is a single column of light copy laid over that banner. */
 .home-hero {
-  align-items: center;
-  display: grid;
-  gap: 3rem;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.75fr);
+  display: block;
   margin: 0 0 4rem;
+  padding: 1.5rem 0 3rem;
 }
 
 .home-hero .home-intro {
-  color: rgba(44, 58, 51, 0.85) !important;
+  color: rgba(244, 241, 230, 0.95) !important;
   font-family: "Source Serif 4", Georgia, serif;
   font-size: clamp(1.35rem, 2.5vw, 2rem);
   line-height: 1.35;
   max-width: 650px;
+  text-shadow: 0 1px 10px rgba(14, 32, 24, 0.5);
 }
 
 .home-actions {
@@ -157,13 +210,17 @@ hr { border-color: var(--border); opacity: 1; }
   margin-top: 2rem;
 }
 
-.home-art {
-  aspect-ratio: 3 / 2;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  display: block;
-  object-fit: cover;
-  width: 100%;
+/* Secondary pill sits on the dark banner: light border + light text. */
+.home-hero .home-actions .site-pill {
+  background: rgba(14, 32, 24, 0.35);
+  border-color: rgba(244, 241, 230, 0.55) !important;
+  color: #F4F1E6 !important;
+}
+
+.home-hero .home-actions .site-pill:hover {
+  background: var(--ochre);
+  border-color: var(--ochre) !important;
+  color: #F4F1E6 !important;
 }
 
 /* ---- Sidebar categories → filter pills above cards ---------------- */
@@ -487,8 +544,6 @@ table thead th {
 
 /* ---- Responsive --------------------------------------------------- */
 @media (max-width: 991px) {
-  .home-hero { grid-template-columns: 1fr; }
-  .home-art { max-height: 28rem; }
   #quarto-margin-sidebar {
     border-right: 0;
     border-bottom: 1px solid var(--border);
@@ -895,7 +950,7 @@ table thead th {
 
 /* ---- Work-in-progress banner ------------------------------------- */
 .wip-banner {
-  background: var(--accent);
+  background: transparent;
   color: #F4F1E6;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.68rem;
@@ -906,6 +961,7 @@ table thead th {
   position: fixed;
   right: 0;
   text-align: center;
+  text-shadow: 0 1px 6px rgba(14, 32, 24, 0.6);
   text-transform: uppercase;
   top: 0;
   z-index: 1031;
