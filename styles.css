@@ -191,7 +191,7 @@ hr { border-color: var(--border); opacity: 1; }
 .home-hero {
   display: block;
   margin: 0 0 4rem;
-  padding: 1.5rem 0 3rem;
+  padding: 3rem 0 3rem;
 }
 
 .home-hero .home-intro {
@@ -229,6 +229,14 @@ hr { border-color: var(--border); opacity: 1; }
   padding-right: 0;
   grid-column: 1 / -1;
   margin-bottom: 1.5rem;
+}
+
+/* The margin sidebar's grid area overlaps the whole content row, which
+   left the category chips floating across the title block. On desktop,
+   push the chips down so they sit just below the title, inside the
+   banner. Mobile already stacks them below the content. */
+@media (min-width: 992px) {
+  body:has(.home-hero) #quarto-margin-sidebar { margin-top: 8.5rem; }
 }
 
 #quarto-margin-sidebar .quarto-listing-category-title {
