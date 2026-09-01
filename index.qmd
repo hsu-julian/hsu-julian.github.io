@@ -23,5 +23,4 @@ written up as I work through them.
 <a class="site-pill" href="#listing-listing">All Writing</a>
 </div>
 </div>
-<img class="home-art" src="images/jade-causal-network-v2.png" alt="Abstract causal network visualization in jade and ochre">
 </div>
