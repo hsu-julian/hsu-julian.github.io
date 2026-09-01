@@ -237,7 +237,7 @@ hr { border-color: var(--border); opacity: 1; }
 /* The margin sidebar's grid area overlaps the whole content row, which
    left the category chips floating across the title block. On desktop,
    push the chips down so they sit just below the title, inside the
-   banner. Mobile already stacks them below the content.
+   banner. 
    This must clear the title block's rendered height (h1 clamp +
    #title-block-header padding/margin, ~line 118). Re-check if either
    changes — currently tuned to ~8.5rem at desktop widths. */
@@ -245,6 +245,18 @@ hr { border-color: var(--border); opacity: 1; }
   body:has(.home-hero) #quarto-margin-sidebar { margin-top: 8.5rem; }
 }
 
+@media (max-width: 991.98px) {
+  #quarto-content.page-columns {
+    display: block;
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+  #quarto-margin-sidebar { display: block; position: static; }
+}
+
+@media (min-width: 992px) and (max-width: 1045px) {
+  .home-hero { padding-top: 7rem; }
+}
 #quarto-margin-sidebar .quarto-listing-category-title {
   display: none;
 }
@@ -270,10 +282,10 @@ hr { border-color: var(--border); opacity: 1; }
 .listing-categories .listing-category,
 .quarto-category,
 d-byline .category {
-  background: var(--bg-card) !important;
+  background: var(--bg-elevated) !important;
   border: 1px solid var(--border) !important;
   border-radius: 999px;
-  color: var(--muted) !important;
+  color: var(--text) !important;
   cursor: pointer;
   display: inline-block;
   font-family: "IBM Plex Mono", ui-monospace, monospace;
@@ -475,7 +487,6 @@ d-byline .category {
 .listing-categories .listing-category {
   font-size: 0.65rem;
   padding: 0.2rem 0.55rem;
-  background: var(--bg-elevated);
   border-radius: 4px;
   color: var(--muted);
   font-family: 'IBM Plex Mono', monospace;
