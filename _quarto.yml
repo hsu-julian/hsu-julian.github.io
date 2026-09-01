@@ -3,7 +3,7 @@ project:
   output-dir: docs
   render:
     - "*.qmd"
-    - "posts/**/*.qmd"        # GitHub Pages will serve straight from /docs — no CI/Actions needed
+    - "posts/**/*.qmd"        # Rendered output goes to /docs; CI builds and deploys it (see .github/workflows/publish.yml)
 
 website:
   title: "Julian Hsu"
