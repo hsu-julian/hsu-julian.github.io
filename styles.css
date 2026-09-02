@@ -237,7 +237,8 @@ hr { border-color: var(--border); opacity: 1; }
 /* The margin sidebar's grid area overlaps the whole content row, which
    left the category chips floating across the title block. On desktop,
    push the chips down so they sit just below the title, inside the
-   banner. 
+   banner. Below 992px the grid is dropped instead (see the block below),
+   so the chips stack in normal flow.
    This must clear the title block's rendered height (h1 clamp +
    #title-block-header padding/margin, ~line 118). Re-check if either
    changes — currently tuned to ~8.5rem at desktop widths. */
@@ -245,18 +246,33 @@ hr { border-color: var(--border); opacity: 1; }
   body:has(.home-hero) #quarto-margin-sidebar { margin-top: 8.5rem; }
 }
 
+/* The sidebar box spans the full content row, so it swallowed clicks on the
+   hero CTAs and the top of the listing. Only the chip row needs to be
+   interactive. */
+#quarto-margin-sidebar { pointer-events: none; }
+#quarto-margin-sidebar .quarto-listing-category { pointer-events: auto; }
+
+/* Below 992px Quarto's grid puts the sidebar and the document content in the
+   same cell, so the chips overlaid the title; below 768px Quarto also sets
+   #quarto-margin-sidebar{display:none}, hiding them entirely. Drop the grid
+   here so the two stack in normal flow. Scoped to the homepage: applying it
+   site-wide shifts every other page in the 768-991px band. */
 @media (max-width: 991.98px) {
-  #quarto-content.page-columns {
+  body:has(.home-hero) #quarto-content.page-columns {
     display: block;
+    /* Replaces the ~26px side gutters the grid template provided. */
     padding-left: 26px;
     padding-right: 26px;
   }
-  #quarto-margin-sidebar { display: block; position: static; }
+  body:has(.home-hero) #quarto-margin-sidebar { display: block; position: static; }
 }
 
+/* 992-1045px: the chip row needs ~980px and wraps to two lines, running into
+   the hero copy. Give the hero extra top padding in that band only. */
 @media (min-width: 992px) and (max-width: 1045px) {
   .home-hero { padding-top: 7rem; }
 }
+
 #quarto-margin-sidebar .quarto-listing-category-title {
   display: none;
 }
@@ -488,7 +504,6 @@ d-byline .category {
   font-size: 0.65rem;
   padding: 0.2rem 0.55rem;
   border-radius: 4px;
-  color: var(--muted);
   font-family: 'IBM Plex Mono', monospace;
   text-transform: uppercase;
   border: 1px solid var(--border);
