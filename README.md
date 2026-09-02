@@ -12,6 +12,3 @@ The site renders into `docs/` (see `output-dir: docs` in `_quarto.yml`).
 [`.github/workflows/publish.yml`](.github/workflows/publish.yml), which runs
 `quarto render`, recreates `docs/.nojekyll` (Quarto cleans `docs/`), and
 deploys the artifact to GitHub Pages (`build_type: workflow`).
-
-To preview locally: `quarto render` (output appears in `docs/`, which is
-gitignored) or `quarto preview`.
