@@ -188,56 +188,60 @@ hr { border-color: var(--border); opacity: 1; }
   margin-bottom: 1.5rem;
 }
 
-/* The margin sidebar's grid area overlaps the whole content row, which
-   left the category chips floating across the title block. On desktop,
-   push the chips down so they sit just below the title, inside the
-   banner. Below 992px the grid is dropped instead (see the block below),
-   so the chips stack in normal flow.
-   This must clear the title block's rendered height (h1 clamp +
-   #title-block-header padding/margin, ~line 118). Re-check if either
-   changes — currently tuned to ~8.5rem at desktop widths. */
-@media (min-width: 992px) {
-  body:has(.home-hero) #quarto-margin-sidebar { margin-top: 8.5rem; }
+/* Quarto puts the margin sidebar in the page-columns grid, and this file
+   gave it `grid-column: 1 / -1` -- so the chip row was an out-of-flow layer
+   spanning the whole content row, floating over the title and hero. Measured
+   at 1400px it was 833px tall and painted above main.content (Quarto sets
+   `z-index: 1`, and a grid item takes z-index without position). Everything
+   around it was a workaround for that: `pointer-events: none` because it
+   swallowed clicks on the hero CTAs, a hand-tuned `margin-top: 8.5rem` to
+   push the chips clear of the title, a separate `display: block` rule below
+   992px, and `.home-hero { padding-top: 7rem }` in the 992-1045px band where
+   the chips wrapped to two lines and hit the hero copy.
+
+   Dropping the grid on the homepage puts the sidebar and the document into
+   normal flow, so the chip row occupies real space and cannot overlap
+   anything at any width. The sidebar collapses from 833px to its own content
+   height (81px single-line, 124px wrapped), and all four workarounds go.
+   Scoped to the homepage: applying it site-wide would shift every other
+   page. -------------------------------------------------------------- */
+body:has(.home-hero) #quarto-content.page-columns {
+  display: block;
+  /* Replaces the ~26px side gutters the grid template provided. */
+  padding-left: 26px;
+  padding-right: 26px;
 }
 
-/* The sidebar box spans the full content row, so it swallowed clicks on the
-   hero CTAs and the top of the listing. Only the chip row needs to be
-   interactive. */
-#quarto-margin-sidebar { pointer-events: none; }
-#quarto-margin-sidebar .quarto-listing-category { pointer-events: auto; }
-
-/* Below 992px Quarto's grid puts the sidebar and the document content in the
-   same cell, so the chips overlaid the title; below 768px Quarto also sets
-   #quarto-margin-sidebar{display:none}, hiding them entirely. Drop the grid
-   here so the two stack in normal flow. Scoped to the homepage: applying it
-   site-wide shifts every other page in the 768-991px band. */
-@media (max-width: 991.98px) {
-  body:has(.home-hero) #quarto-content.page-columns {
-    display: block;
-    /* Replaces the ~26px side gutters the grid template provided. */
-    padding-left: 26px;
-    padding-right: 26px;
-  }
-  body:has(.home-hero) #quarto-margin-sidebar { display: block; position: static; }
-}
-
-/* 992-1045px: the chip row needs ~980px and wraps to two lines, running into
-   the hero copy. Give the hero extra top padding in that band only. */
-@media (min-width: 992px) and (max-width: 1045px) {
-  .home-hero { padding-top: 7rem; }
+body:has(.home-hero) #quarto-margin-sidebar {
+  display: block;
+  margin-top: 0;
+  /* Clears the fixed bar: without this the row starts level with the navbar
+     bottom edge at ~1000px, where Quarto drops its own sidebar padding. */
+  padding-top: 1rem;
+  position: static;
 }
 
 #quarto-margin-sidebar .quarto-listing-category-title {
   display: none;
 }
 
+/* The chip row is the only visible part of the sidebar (the "Categories"
+   heading above is display:none), so the opaque ground goes here rather
+   than on #quarto-margin-sidebar itself. That matters: Quarto gives the
+   sidebar `z-index: 1` and `grid-row: content-top / page-bottom`, and it
+   is a grid item, so z-index applies without position -- the box paints
+   above main.content and is stretched to the full height of the content
+   column (measured: 833px at 1400px wide). A background on the sidebar
+   would paint an opaque rectangle over the whole page. */
 #quarto-margin-sidebar .quarto-listing-category {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
 
 .quarto-listing-category-title {
