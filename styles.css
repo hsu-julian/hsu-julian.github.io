@@ -25,47 +25,6 @@ body {
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-/* ---- Top banner: hero artwork behind navbar + wip-banner + intro ---
-   A fixed pseudo-element paints the jade network image across the top of
-   every page, dissolving into the page background via a gradient scrim.
-   The band is taller on the homepage so the title block and .home-hero
-   copy also sit inside it. ------------------------------------------- */
-:root { --banner-h: 21rem; }
-
-body::before {
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(14, 32, 24, 0.82) 0%,
-      rgba(14, 32, 24, 0.68) 40%,
-      rgba(20, 44, 33, 0.55) 62%,
-      rgba(242, 239, 228, 0.55) 86%,
-      var(--bg) 100%
-    ),
-    url("images/jade-causal-network-v2-hero.jpg");
-  background-position: center top, center top;
-  background-repeat: no-repeat, no-repeat;
-  background-size: 100% 100%, cover;
-  content: "";
-  height: var(--banner-h);
-  left: 0;
-  pointer-events: none;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: -1;
-}
-
-body:has(.home-hero)::before { --banner-h: 46rem; }
-
-@media (max-width: 640px) {
-  :root { --banner-h: 18rem; }
-  /* Measured at 390px: hero copy ends ~625px, listing starts ~693px —
-     46rem (736px) lets the scrim finish fading just as the cards begin.
-     Re-measure if the title or intro copy changes. */
-  body:has(.home-hero)::before { --banner-h: 46rem; }
-}
-
 ::selection { background: var(--accent); color: var(--bg); }
 
 a {
@@ -91,11 +50,11 @@ button:focus-visible,
    showed straight through the nav.
 
    The bar is now solid jade at every scroll position, so content simply
-   disappears underneath it. --bar-jade is the dominant jade tone in the
-   network linework of images/jade-causal-network-v2-hero.jpg -- 21.7% of
-   all jade pixels in the artwork, the single most common one.
-   --bar-jade-deep is that colour taken 25% toward black, for the
-   work-in-progress strip above it. ----------------------------------- */
+   disappears underneath it. --bar-jade was sampled from the network
+   linework of the old hero artwork (since retired): the dominant jade
+   tone, 21.7% of that image's jade pixels. --bar-jade-deep is the same
+   colour taken 25% toward black, for the work-in-progress strip above
+   the nav. ----------------------------------------------------------- */
 :root {
   --bar-jade: #244C34;
   --bar-jade-deep: #1B3927;
@@ -143,7 +102,7 @@ button:focus-visible,
 
 #title-block-header,
 .quarto-title-block {
-  border-bottom: 1px solid rgba(244, 241, 230, 0.35);
+  border-bottom: 1px solid var(--border);
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
 }
@@ -157,13 +116,6 @@ h1, .h1 {
   font-weight: 400;
   letter-spacing: -0.065em;
   line-height: 0.95;
-}
-
-/* The title block sits inside the top banner, so it needs light text. */
-#title-block-header .title,
-.quarto-title h1 {
-  color: #F4F1E6;
-  text-shadow: 0 2px 14px rgba(14, 32, 24, 0.45);
 }
 
 h2, .h2 {
@@ -204,16 +156,9 @@ hr { border-color: var(--border); opacity: 1; }
   text-transform: uppercase;
 }
 
-/* Title metadata also lives inside the top banner. */
-#title-block-header .quarto-title-meta-heading,
-#title-block-header .quarto-title-meta-contents,
-#title-block-header .date {
-  color: rgba(244, 241, 230, 0.78) !important;
-}
-
 /* ---- Hero section ------------------------------------------------- */
-/* The artwork is now the top banner background (see body::before), so
-   the hero is a single column of light copy laid over that banner. */
+/* A single column of copy on the page ground. There is no artwork behind
+   it any more, so everything here is ink on paper. */
 .home-hero {
   display: block;
   margin: 0 0 4rem;
@@ -221,12 +166,11 @@ hr { border-color: var(--border); opacity: 1; }
 }
 
 .home-hero .home-intro {
-  color: rgba(244, 241, 230, 0.95) !important;
+  color: rgba(44, 58, 51, 0.88) !important;
   font-family: "Source Serif 4", Georgia, serif;
   font-size: clamp(1.35rem, 2.5vw, 2rem);
   line-height: 1.35;
   max-width: 650px;
-  text-shadow: 0 1px 10px rgba(14, 32, 24, 0.5);
 }
 
 .home-actions {
@@ -234,19 +178,6 @@ hr { border-color: var(--border); opacity: 1; }
   flex-wrap: wrap;
   gap: 0.8rem;
   margin-top: 2rem;
-}
-
-/* Secondary pill sits on the dark banner: light border + light text. */
-.home-hero .home-actions .site-pill {
-  background: rgba(14, 32, 24, 0.35);
-  border-color: rgba(244, 241, 230, 0.55) !important;
-  color: #F4F1E6 !important;
-}
-
-.home-hero .home-actions .site-pill:hover {
-  background: var(--ochre);
-  border-color: var(--ochre) !important;
-  color: #F4F1E6 !important;
 }
 
 /* ---- Sidebar categories → filter pills above cards ---------------- */
