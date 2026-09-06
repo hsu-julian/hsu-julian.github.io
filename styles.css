@@ -84,15 +84,38 @@ button:focus-visible,
   outline-offset: 3px;
 }
 
+/* ---- Top bar: opaque from the very first pixel of scroll -----------
+   The bar was transparent, and Quarto ships headroom.js, which re-pins
+   the header the moment you scroll up. A transparent bar re-pinning over
+   live content is what produced the overlap: listing cards and body copy
+   showed straight through the nav.
+
+   The bar is now solid jade at every scroll position, so content simply
+   disappears underneath it. --bar-jade is the dominant jade tone in the
+   network linework of images/jade-causal-network-v2-hero.jpg -- 21.7% of
+   all jade pixels in the artwork, the single most common one.
+   --bar-jade-deep is that colour taken 25% toward black, for the
+   work-in-progress strip above it. ----------------------------------- */
+:root {
+  --bar-jade: #244C34;
+  --bar-jade-deep: #1B3927;
+  --wip-h: 2rem;
+}
+
 #quarto-header {
-  background: transparent !important;
+  background: var(--bar-jade) !important;
   border-bottom: 0;
 }
 
 .navbar {
-  background: transparent !important;
+  background: var(--bar-jade) !important;
   border-bottom: 0 !important;
   min-height: 4.25rem;
+}
+
+#quarto-header.fixed-top {
+  border-bottom: 3px solid var(--ochre);
+  box-shadow: 0 2px 14px rgba(14, 32, 24, 0.16);
 }
 
 .navbar-title {
@@ -990,7 +1013,7 @@ table thead th {
 
 /* ---- Work-in-progress banner ------------------------------------- */
 .wip-banner {
-  background: transparent;
+  background: var(--bar-jade-deep);
   color: #F4F1E6;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.68rem;
@@ -1001,14 +1024,34 @@ table thead th {
   position: fixed;
   right: 0;
   text-align: center;
-  text-shadow: 0 1px 6px rgba(14, 32, 24, 0.6);
   text-transform: uppercase;
   top: 0;
   z-index: 1031;
 }
 
 #quarto-header.fixed-top {
-  top: 2rem;
+  top: var(--wip-h);
+}
+
+/* Headroom hides the bar on scroll-down and returns it on scroll-up.
+   Quarto's own rule is `header.headroom--unpinned { translateY(-100%) }`,
+   which is 100% of the HEADER box only -- but the header sits at
+   top: var(--wip-h) to clear the strip above it, so 2rem of navbar stayed
+   parked on screen. That was invisible while the bar was transparent; now
+   that it is opaque it would leave the ochre rule hanging below the wip
+   strip. Take the header fully clear, and move the strip with it so the
+   two always travel as one piece. */
+header#quarto-header.headroom,
+.wip-banner {
+  transition: transform 200ms linear;
+}
+
+header#quarto-header.headroom--unpinned {
+  transform: translateY(calc(-100% - var(--wip-h)));
+}
+
+body:has(#quarto-header.headroom--unpinned) .wip-banner {
+  transform: translateY(-100%);
 }
 
 #quarto-content {
