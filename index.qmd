@@ -17,7 +17,7 @@ title-block-banner: false
 <div class="home-hero-copy">
 <p class="home-intro">
 Notes on causal inference, applied econometrics, and machine learning —
-written up as I work through them. 
+written up as I work through them.
 </p>
 <div class="home-actions">
 <a class="site-pill" href="posts/msprt-vs-fixed-horizon/">Latest Notes</a>
@@ -25,3 +25,87 @@ written up as I work through them.
 </div>
 </div>
 </div>
+
+<script>
+/* Category filter enhancement, scoped to this page -- it is the only
+   listing on the site. Quarto's own markup is a bare `<div onclick>`, with
+   no keyboard access; this adds that, plus a collapsible "+N more" row
+   below 768px. Progressive enhancement: the CSS default (see styles.css)
+   is every chip visible and wrapped, fully functional with no JS. This
+   only prunes it down to a compact row once it runs. */
+(function () {
+  function enhanceCategories() {
+    var sidebar = document.getElementById('quarto-margin-sidebar');
+    if (!sidebar) return;
+    var row = sidebar.querySelector('.quarto-listing-category');
+    if (!row) return;
+    var chips = Array.prototype.slice.call(row.querySelectorAll('.category'));
+    if (!chips.length) return;
+
+    chips.forEach(function (chip) {
+      chip.setAttribute('role', 'button');
+      chip.setAttribute('tabindex', '0');
+      chip.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          chip.click();
+        }
+      });
+    });
+
+    var moreBtn = null;
+    var expanded = false;
+
+    function collapse() {
+      if (expanded) return;
+      chips.forEach(function (c) { c.style.display = ''; });
+      if (moreBtn) { moreBtn.remove(); moreBtn = null; }
+
+      if (window.innerWidth >= 768) return;
+
+      moreBtn = document.createElement('button');
+      moreBtn.type = 'button';
+      moreBtn.className = 'chip-more';
+      moreBtn.setAttribute('aria-expanded', 'false');
+      row.appendChild(moreBtn);
+      var btnWidth = moreBtn.getBoundingClientRect().width;
+
+      var available = row.clientWidth;
+      var used = 0, visible = 0;
+      for (var i = 0; i < chips.length; i++) {
+        var w = chips[i].getBoundingClientRect().width + 8;
+        if (used + w + btnWidth > available && visible > 0) break;
+        used += w;
+        visible++;
+      }
+      var hiddenCount = chips.length - visible;
+      if (hiddenCount <= 0) {
+        moreBtn.remove();
+        moreBtn = null;
+        return;
+      }
+      for (var j = visible; j < chips.length; j++) chips[j].style.display = 'none';
+      moreBtn.textContent = '+' + hiddenCount + ' more';
+      moreBtn.addEventListener('click', function () {
+        expanded = true;
+        chips.forEach(function (c) { c.style.display = ''; });
+        moreBtn.remove();
+        moreBtn = null;
+      });
+    }
+
+    collapse();
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(collapse, 150);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', enhanceCategories);
+  } else {
+    enhanceCategories();
+  }
+})();
+</script>
