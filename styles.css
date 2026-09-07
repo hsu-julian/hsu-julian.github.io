@@ -226,64 +226,89 @@ hr { border-color: var(--border); opacity: 1; }
   color: #F4F1E6 !important;
 }
 
-/* ---- Sidebar categories → filter pills above cards ---------------- */
-#quarto-margin-sidebar {
-  border-right: none;
-  padding-right: 0;
-  grid-column: 1 / -1;
-  margin-bottom: 1.5rem;
-}
+/* ---- Category filter chips -----------------------------------------
+   >=768px: Quarto's own default grid slot for #quarto-margin-sidebar is
+   `grid-column: body-end/page-end` -- a dedicated right-margin column that
+   main.content does NOT claim (verified: main.content's own grid-column is
+   `page-start/body-content-end`, stopping before body-end). No override
+   needed at all; deleting the old `grid-column: 1/-1` alone is what makes
+   this a real column instead of an 833px-tall overlay above the content.
+   Confirmed with a true rectangle-intersection test (not just top/bottom
+   coincidence, which produced a false "overlap" reading earlier) that this
+   column stays clear of the H1 at every width from 1600px down to 768px --
+   one mechanism for the whole range, not a separate tablet treatment. That
+   also means the 8.5rem/7rem magic numbers and the pointer-events hack are
+   gone -- nothing here can cover the hero or the post list.
 
-/* The margin sidebar's grid area overlaps the whole content row, which
-   left the category chips floating across the title block. On desktop,
-   push the chips down so they sit just below the title, inside the
-   banner. Below 992px the grid is dropped instead (see the block below),
-   so the chips stack in normal flow.
-   This must clear the title block's rendered height (h1 clamp +
-   #title-block-header padding/margin, ~line 118). Re-check if either
-   changes — currently tuned to ~8.5rem at desktop widths. */
-@media (min-width: 992px) {
-  body:has(.home-hero) #quarto-margin-sidebar { margin-top: 8.5rem; }
-}
-
-/* The sidebar box spans the full content row, so it swallowed clicks on the
-   hero CTAs and the top of the listing. Only the chip row needs to be
-   interactive. */
-#quarto-margin-sidebar { pointer-events: none; }
-#quarto-margin-sidebar .quarto-listing-category { pointer-events: auto; }
-
-/* Below 992px Quarto's grid puts the sidebar and the document content in the
-   same cell, so the chips overlaid the title; below 768px Quarto also sets
-   #quarto-margin-sidebar{display:none}, hiding them entirely. Drop the grid
-   here so the two stack in normal flow. Scoped to the homepage: applying it
-   site-wide shifts every other page in the 768-991px band. */
-@media (max-width: 991.98px) {
-  body:has(.home-hero) #quarto-content.page-columns {
-    display: block;
-    /* Replaces the ~26px side gutters the grid template provided. */
-    padding-left: 26px;
-    padding-right: 26px;
-  }
-  body:has(.home-hero) #quarto-margin-sidebar { display: block; position: static; }
-}
-
-/* 992-1045px: the chip row needs ~980px and wraps to two lines, running into
-   the hero copy. Give the hero extra top padding in that band only. */
-@media (min-width: 992px) and (max-width: 1045px) {
-  .home-hero { padding-top: 7rem; }
-}
-
+   <768px: below Quarto's own breakpoint, #quarto-margin-sidebar itself
+   would be display:none and filtering would simply vanish (confirmed
+   against Quarto's unstyled baseline -- that is the true state today, not
+   a bug to preserve). The rule below re-enables it as a collapsible row.
+   The CSS here is the progressive-enhancement baseline: every chip visible,
+   wrapped -- correct and fully functional with no JS at all. chip-collapse.js
+   (see index.qmd) prunes it down to one row + a "+N more" button once it
+   runs, using each chip's actual measured width rather than the fixed
+   breakpoint tiers used to verify Part B/C didn't interact badly on
+   container width. -------------------------------------------------- */
 #quarto-margin-sidebar .quarto-listing-category-title {
   display: none;
 }
 
-#quarto-margin-sidebar .quarto-listing-category {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border);
+@media (min-width: 768px) {
+  #quarto-margin-sidebar .quarto-listing-category {
+    display: block;
+    padding: 0.5rem 0;
+  }
+  #quarto-margin-sidebar .category {
+    display: block;
+    margin: 0 0 0.4rem;
+    overflow-wrap: anywhere;
+  }
+  #quarto-margin-sidebar { min-width: 0; }
+}
+
+@media (max-width: 767.98px) {
+  /* `position: static` alone does not remove a grid item from the grid --
+     the sidebar still occupied its assigned body-end/page-end column, and
+     at true phone widths that Quarto's own minmax() bounds down to ~20px.
+     Chips then visually spilled past the edge of the screen, which a
+     scrollWidth check alone does not catch (the overflowing children did
+     not enlarge the document's own scroll box). Confirmed via a real
+     narrow-viewport test (not --window-size, which Chromium headless
+     clamps to ~504px): row width was 20px at 320-430px, with chips
+     rendering 30-150px past the viewport edge. Dropping the grid here
+     restores the page to normal block flow, so the sidebar gets the whole
+     content width instead of a starved margin column. */
+  body:has(.home-hero) #quarto-content.page-columns {
+    display: block;
+    padding-left: 26px;
+    padding-right: 26px;
+  }
+  #quarto-margin-sidebar { display: block; position: static; margin: 1rem 0; }
+  #quarto-margin-sidebar .quarto-listing-category {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+}
+
+.chip-more {
+  background: var(--ochre);
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.65rem;
+  text-transform: uppercase;
+}
+
+.chip-more:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .quarto-listing-category-title {
@@ -299,7 +324,11 @@ hr { border-color: var(--border); opacity: 1; }
 .quarto-category,
 d-byline .category {
   background: var(--bg-elevated) !important;
-  border: 1px solid var(--border) !important;
+  /* var(--border) measures 1.20:1 against this background -- effectively
+     invisible, and below the 3:1 WCAG 1.4.11 floor for non-text UI.
+     var(--muted) measures 3.48:1 and is an existing token, not a new
+     colour. */
+  border: 1px solid var(--muted) !important;
   border-radius: 999px;
   color: var(--text) !important;
   cursor: pointer;
@@ -327,6 +356,8 @@ d-byline .category {
   border-color: var(--heading) !important;
   color: var(--bg) !important;
 }
+
+
 
 /* ---- Card Grid Layout (CSS-only restyling) ------------------------ */
 .quarto-listing-container-default {
