@@ -357,8 +357,6 @@ d-byline .category {
   color: var(--bg) !important;
 }
 
-
-
 /* ---- Card Grid Layout (CSS-only restyling) ------------------------ */
 .quarto-listing-container-default {
   margin-top: 2rem;
