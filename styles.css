@@ -25,45 +25,26 @@ body {
   transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-/* ---- Top banner: hero artwork behind navbar + wip-banner + intro ---
-   A fixed pseudo-element paints the jade network image across the top of
-   every page, dissolving into the page background via a gradient scrim.
-   The band is taller on the homepage so the title block and .home-hero
-   copy also sit inside it. ------------------------------------------- */
-:root { --banner-h: 21rem; }
+/* ---- Top bar: opaque from the very first pixel of scroll -----------
+   The bar was transparent, and Quarto ships headroom.js, which re-pins
+   the header the moment you scroll up. A transparent bar re-pinning over
+   live content is what produced the overlap: listing content and body
+   copy showed straight through the nav.
 
-body::before {
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(14, 32, 24, 0.82) 0%,
-      rgba(14, 32, 24, 0.68) 40%,
-      rgba(20, 44, 33, 0.55) 62%,
-      rgba(242, 239, 228, 0.55) 86%,
-      var(--bg) 100%
-    ),
-    url("images/jade-causal-network-v2-hero.jpg");
-  background-position: center top, center top;
-  background-repeat: no-repeat, no-repeat;
-  background-size: 100% 100%, cover;
-  content: "";
-  height: var(--banner-h);
-  left: 0;
-  pointer-events: none;
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: -1;
-}
-
-body:has(.home-hero)::before { --banner-h: 46rem; }
-
-@media (max-width: 640px) {
-  :root { --banner-h: 18rem; }
-  /* Measured at 390px: hero copy ends ~625px, listing starts ~693px —
-     46rem (736px) lets the scrim finish fading just as the cards begin.
-     Re-measure if the title or intro copy changes. */
-  body:has(.home-hero)::before { --banner-h: 46rem; }
+   The bar is now solid jade at every scroll position, so content simply
+   disappears underneath it. --bar-jade was sampled from the network
+   linework of the old hero artwork (since retired): the dominant jade
+   tone, 21.7% of that image's jade pixels. --bar-jade-deep is the same
+   colour taken 25% toward black, for the work-in-progress strip above
+   the nav. --ochre-on-bar is a lightened ochre for the active-page
+   underline -- the base --ochre measures 2.49:1 against the jade, below
+   the 3:1 WCAG 1.4.11 floor for non-text UI; this variant measures
+   3.56:1, chosen by eye from a set of passing candidates. ------------- */
+:root {
+  --bar-jade: #244C34;
+  --bar-jade-deep: #1B3927;
+  --ochre-on-bar: #BC9572;
+  --wip-h: 2rem;
 }
 
 ::selection { background: var(--accent); color: var(--bg); }
@@ -85,14 +66,19 @@ button:focus-visible,
 }
 
 #quarto-header {
-  background: transparent !important;
+  background: var(--bar-jade);
   border-bottom: 0;
 }
 
 .navbar {
-  background: transparent !important;
+  background: var(--bar-jade);
   border-bottom: 0 !important;
   min-height: 4.25rem;
+}
+
+#quarto-header.fixed-top {
+  border-bottom: 3px solid var(--ochre);
+  box-shadow: 0 2px 14px rgba(14, 32, 24, 0.16);
 }
 
 .navbar-title {
@@ -114,13 +100,13 @@ button:focus-visible,
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active { color: #F4F1E6 !important; }
-.navbar-nav .nav-link.active { border-bottom: 1.5px solid var(--ochre); }
+.navbar-nav .nav-link.active { border-bottom: 1.5px solid var(--ochre-on-bar); }
 .navbar-nav .nav-link i { color: rgba(244, 241, 230, 0.6); font-size: 1rem; }
 .navbar-nav .nav-link:hover i { color: var(--ochre); }
 
 #title-block-header,
 .quarto-title-block {
-  border-bottom: 1px solid rgba(244, 241, 230, 0.35);
+  border-bottom: 1px solid var(--border);
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
 }
@@ -134,13 +120,6 @@ h1, .h1 {
   font-weight: 400;
   letter-spacing: -0.065em;
   line-height: 0.95;
-}
-
-/* The title block sits inside the top banner, so it needs light text. */
-#title-block-header .title,
-.quarto-title h1 {
-  color: #F4F1E6;
-  text-shadow: 0 2px 14px rgba(14, 32, 24, 0.45);
 }
 
 h2, .h2 {
@@ -181,16 +160,8 @@ hr { border-color: var(--border); opacity: 1; }
   text-transform: uppercase;
 }
 
-/* Title metadata also lives inside the top banner. */
-#title-block-header .quarto-title-meta-heading,
-#title-block-header .quarto-title-meta-contents,
-#title-block-header .date {
-  color: rgba(244, 241, 230, 0.78) !important;
-}
-
 /* ---- Hero section ------------------------------------------------- */
-/* The artwork is now the top banner background (see body::before), so
-   the hero is a single column of light copy laid over that banner. */
+/* A single column of copy on the page ground -- no artwork behind it. */
 .home-hero {
   display: block;
   margin: 0 0 4rem;
@@ -198,12 +169,11 @@ hr { border-color: var(--border); opacity: 1; }
 }
 
 .home-hero .home-intro {
-  color: rgba(244, 241, 230, 0.95) !important;
+  color: rgba(44, 58, 51, 0.88) !important;
   font-family: "Source Serif 4", Georgia, serif;
   font-size: clamp(1.35rem, 2.5vw, 2rem);
   line-height: 1.35;
   max-width: 650px;
-  text-shadow: 0 1px 10px rgba(14, 32, 24, 0.5);
 }
 
 .home-actions {
@@ -211,19 +181,6 @@ hr { border-color: var(--border); opacity: 1; }
   flex-wrap: wrap;
   gap: 0.8rem;
   margin-top: 2rem;
-}
-
-/* Secondary pill sits on the dark banner: light border + light text. */
-.home-hero .home-actions .site-pill {
-  background: rgba(14, 32, 24, 0.35);
-  border-color: rgba(244, 241, 230, 0.55) !important;
-  color: #F4F1E6 !important;
-}
-
-.home-hero .home-actions .site-pill:hover {
-  background: var(--ochre);
-  border-color: var(--ochre) !important;
-  color: #F4F1E6 !important;
 }
 
 /* ---- Category filter chips -----------------------------------------
@@ -357,126 +314,35 @@ d-byline .category {
   color: var(--bg) !important;
 }
 
-/* ---- Card Grid Layout (CSS-only restyling) ------------------------ */
+/* ---- Post index (flat list, no cards) ------------------------------
+   Quarto's own `.quarto-post.image-right{flex-direction:row-reverse}`
+   (0,2,0) still beats a bare `.quarto-post{flex-direction:column}` (0,1,0),
+   so the one override below is still required or tags render beside the
+   title instead of under it. Everything else that fought that specificity
+   war for a card layout is gone -- there is no grid, so no column-count-
+   depends-on-container-width behavior exists to interact with anything
+   else on the page. -------------------------------------------------- */
 .quarto-listing-container-default {
   margin-top: 2rem;
 }
 
 .list.quarto-listing-default {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1.5rem;
+  display: block;
 }
 
-.quarto-post {
-  background: var(--bg-card);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+.list.quarto-listing-default div.quarto-post,
+.list.quarto-listing-default div.quarto-post.image-right,
+.list.quarto-listing-default div.quarto-post.image-left {
   display: flex;
   flex-direction: column;
-  padding: 0;
-  border-bottom: none;
-  grid-template-columns: 1fr;
   gap: 0;
   margin: 0;
-}
-
-.quarto-post:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-  border-color: #c4bda8;
-}
-
-/* Featured card — first post spans full width */
-.quarto-post:first-child {
-  grid-column: 1 / -1;
-  flex-direction: row;
-  min-height: 340px;
-}
-
-.quarto-post:first-child .thumbnail {
-  width: 50%;
-  height: auto;
-  min-height: 340px;
-  border-bottom: none;
-  border-right: 1px solid var(--border);
-  display: flex;
-}
-
-.quarto-post:first-child .thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.quarto-post:first-child .body {
-  padding: 2.2rem;
-  justify-content: center;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.quarto-post:first-child .listing-title {
-  font-size: clamp(1.5rem, 2.5vw, 1.9rem);
-}
-
-.quarto-post:first-child .listing-description {
-  font-size: 1rem;
-}
-
-/* Standard card internals */
-.quarto-post .thumbnail {
-  height: 200px;
-  background: var(--bg-elevated);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  padding: 1.1rem 0;
   border-bottom: 1px solid var(--border);
 }
 
-.quarto-post .thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.quarto-post .thumbnail .card-img-top {
-  width: 100%;
-  height: 100%;
-}
-
-.quarto-post .thumbnail .card-img-top img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.quarto-post .body {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-  min-width: 0;
-}
-
-.quarto-post .metadata {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.7rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-family: 'IBM Plex Mono', monospace;
-  padding: 0 1.5rem 1.5rem;
-  text-align: left;
+.list.quarto-listing-default div.quarto-post:first-child {
+  padding-top: 0;
 }
 
 .listing-title {
@@ -485,8 +351,7 @@ d-byline .category {
   font-weight: 400;
   color: var(--heading);
   line-height: 1.3;
-  margin: 0;
-  transition: none;
+  margin: 0 0 0.5rem;
 }
 
 .listing-title a {
@@ -498,35 +363,10 @@ d-byline .category {
   color: var(--accent);
 }
 
-/* Remove old hover effects */
-.quarto-post:hover .listing-title { transform: none; }
-.quarto-post:nth-child(3n+1) .listing-title a:hover,
-.quarto-post:nth-child(3n+2) .listing-title a:hover,
-.quarto-post:nth-child(3n+3) .listing-title a:hover {
-  color: var(--accent);
-}
-
-.listing-description,
-.listing-description p {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin: 0.5rem 0 0;
-  max-width: none;
-}
-
-.listing-description a { color: inherit; text-decoration: none; }
-
 .listing-categories {
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
-  margin-top: auto;
-  padding-top: 1rem;
 }
 
 .listing-categories .listing-category {
@@ -535,8 +375,9 @@ d-byline .category {
   border-radius: 4px;
   font-family: 'IBM Plex Mono', monospace;
   text-transform: uppercase;
-  border: 1px solid var(--border);
 }
+
+
 
 main.content { padding-top: 2.5rem; }
 .quarto-title-meta { border-top: 0; margin-top: 0.8rem; }
@@ -1019,29 +860,59 @@ table thead th {
 
 /* ---- Work-in-progress banner ------------------------------------- */
 .wip-banner {
-  background: transparent;
+  background: var(--bar-jade-deep);
   color: #F4F1E6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: "IBM Plex Mono", monospace;
   font-size: 0.68rem;
   font-weight: 600;
+  height: var(--wip-h);
   left: 0;
   letter-spacing: 0.1em;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   position: fixed;
   right: 0;
   text-align: center;
-  text-shadow: 0 1px 6px rgba(14, 32, 24, 0.6);
   text-transform: uppercase;
   top: 0;
   z-index: 1031;
 }
 
 #quarto-header.fixed-top {
-  top: 2rem;
+  top: var(--wip-h);
+}
+
+/* Headroom hides the bar on scroll-down and returns it on scroll-up.
+   Quarto's own rule is `header.headroom--unpinned { translateY(-100%) }` --
+   100% of the HEADER box only -- but the header sits at top: var(--wip-h)
+   to clear the strip above it, so var(--wip-h) of navbar stayed parked on
+   screen when unpinned. That was invisible while the bar was transparent;
+   opaque, it would leave the ochre rule hanging under the wip strip. Take
+   the header fully clear, and move the strip with it so the two always
+   travel as one piece. */
+@media (prefers-reduced-motion: no-preference) {
+  header#quarto-header.headroom,
+  .wip-banner {
+    transition: transform 200ms linear;
+  }
+}
+
+header#quarto-header.headroom--unpinned {
+  transform: translateY(calc(-100% - var(--wip-h)));
+}
+
+body:has(#quarto-header.headroom--unpinned) .wip-banner {
+  transform: translateY(-100%);
+}
+
+@media print {
+  .wip-banner { display: none; }
 }
 
 #quarto-content {
-  padding-top: 2rem;
+  padding-top: var(--wip-h);
 }
 
 @media (max-width: 600px) {
