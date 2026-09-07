@@ -285,126 +285,35 @@ d-byline .category {
   color: var(--bg) !important;
 }
 
-/* ---- Card Grid Layout (CSS-only restyling) ------------------------ */
+/* ---- Post index (flat list, no cards) ------------------------------
+   Quarto's own `.quarto-post.image-right{flex-direction:row-reverse}`
+   (0,2,0) still beats a bare `.quarto-post{flex-direction:column}` (0,1,0),
+   so the one override below is still required or tags render beside the
+   title instead of under it. Everything else that fought that specificity
+   war for a card layout is gone -- there is no grid, so no column-count-
+   depends-on-container-width behavior exists to interact with anything
+   else on the page. -------------------------------------------------- */
 .quarto-listing-container-default {
   margin-top: 2rem;
 }
 
 .list.quarto-listing-default {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1.5rem;
+  display: block;
 }
 
-.quarto-post {
-  background: var(--bg-card);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+.list.quarto-listing-default div.quarto-post,
+.list.quarto-listing-default div.quarto-post.image-right,
+.list.quarto-listing-default div.quarto-post.image-left {
   display: flex;
   flex-direction: column;
-  padding: 0;
-  border-bottom: none;
-  grid-template-columns: 1fr;
   gap: 0;
   margin: 0;
-}
-
-.quarto-post:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-  border-color: #c4bda8;
-}
-
-/* Featured card — first post spans full width */
-.quarto-post:first-child {
-  grid-column: 1 / -1;
-  flex-direction: row;
-  min-height: 340px;
-}
-
-.quarto-post:first-child .thumbnail {
-  width: 50%;
-  height: auto;
-  min-height: 340px;
-  border-bottom: none;
-  border-right: 1px solid var(--border);
-  display: flex;
-}
-
-.quarto-post:first-child .thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.quarto-post:first-child .body {
-  padding: 2.2rem;
-  justify-content: center;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.quarto-post:first-child .listing-title {
-  font-size: clamp(1.5rem, 2.5vw, 1.9rem);
-}
-
-.quarto-post:first-child .listing-description {
-  font-size: 1rem;
-}
-
-/* Standard card internals */
-.quarto-post .thumbnail {
-  height: 200px;
-  background: var(--bg-elevated);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  padding: 1.1rem 0;
   border-bottom: 1px solid var(--border);
 }
 
-.quarto-post .thumbnail img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.quarto-post .thumbnail .card-img-top {
-  width: 100%;
-  height: 100%;
-}
-
-.quarto-post .thumbnail .card-img-top img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.quarto-post .body {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-  min-width: 0;
-}
-
-.quarto-post .metadata {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.7rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-family: 'IBM Plex Mono', monospace;
-  padding: 0 1.5rem 1.5rem;
-  text-align: left;
+.list.quarto-listing-default div.quarto-post:first-child {
+  padding-top: 0;
 }
 
 .listing-title {
@@ -413,8 +322,7 @@ d-byline .category {
   font-weight: 400;
   color: var(--heading);
   line-height: 1.3;
-  margin: 0;
-  transition: none;
+  margin: 0 0 0.5rem;
 }
 
 .listing-title a {
@@ -426,35 +334,10 @@ d-byline .category {
   color: var(--accent);
 }
 
-/* Remove old hover effects */
-.quarto-post:hover .listing-title { transform: none; }
-.quarto-post:nth-child(3n+1) .listing-title a:hover,
-.quarto-post:nth-child(3n+2) .listing-title a:hover,
-.quarto-post:nth-child(3n+3) .listing-title a:hover {
-  color: var(--accent);
-}
-
-.listing-description,
-.listing-description p {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin: 0.5rem 0 0;
-  max-width: none;
-}
-
-.listing-description a { color: inherit; text-decoration: none; }
-
 .listing-categories {
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
-  margin-top: auto;
-  padding-top: 1rem;
 }
 
 .listing-categories .listing-category {
@@ -463,7 +346,6 @@ d-byline .category {
   border-radius: 4px;
   font-family: 'IBM Plex Mono', monospace;
   text-transform: uppercase;
-  border: 1px solid var(--border);
 }
 
 
