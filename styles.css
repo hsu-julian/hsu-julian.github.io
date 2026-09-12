@@ -661,7 +661,8 @@ table thead th {
   color: var(--accent);
   float: right;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 0.72rem;
+  font-size: 0.82rem;
+  font-weight: 200;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }

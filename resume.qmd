@@ -18,46 +18,52 @@ title-block-banner: false
 <span class="job-dates">2026 – Present</span>
 <span class="job-company">Netflix</span>, Senior Data Scientist
 
-
+<br>
 <span class="job-dates">2024 – 2026</span>
 <span class="job-company">Airbnb</span>, Staff Data Scientist
 
-<li> DS tech lead for homepage personalization using ML, causal inference, and experimentation. </li>
-<li> XFN projects launching and improving products and features. </li>
-<li> Incorporated reinforcement learning style models to homepage ranking. </li>
-<li> Advanced experimentation infrastructure and speed with better targeting and forecast/surrogate models. </li>
+- DS tech lead for homepage personalization using ML, causal inference, and experimentation.
+- XFN projects launching and improving products and features.
+- Incorporated reinforcement learning style models to homepage ranking.
+- Advanced experimentation infrastructure and speed with better targeting and forecast/surrogate models.
+<br>
 
 <span class="job-dates">2023 – 2024</span>
 <span class="job-company">Amazon Delivery Experience</span>, Senior Economist 
 
-<li> Developed VP-wide guidance on experimentation objectives and guardrails. </li>
-<li> Designed and launched holdout experiments to enable personalizing checkout options. </li>
-<li> Created custom tools to deep dive experiments and personalize products using causal ML. </li>
-<li> Taught an Amazon-wide class on heterogeneous treatment effects. </li>
+- Developed VP-wide guidance on experimentation objectives and guardrails.
+- Designed and launched holdout experiments to enable personalizing checkout options.
+- Created custom tools to deep dive experiments and personalize products using causal ML.
+- Taught an Amazon-wide class on heterogeneous treatment effects.
+<br>
 
 <span class="job-dates">2021 – 2023</span>
 <span class="job-company">Amazon Fresh Grocery</span>, Senior Economist
 
-<li> Created a novel grocery item substitution model for grocery inventory recommendations. This drives what you see on Whole Foods and Fresh shelves today.  </li>
-<li> Led project to create science-based grocery recommendations, working with science, product, and engineering teams. </li>
-<li> Developed framework for dynamic and automated store-level experimentation design and evaluation. </li>
-<li> Organized a corporate-wide internal conference workshop on the intersection of reinforcement learning and causal inference. </li>
+- Created a novel grocery item substitution model for grocery inventory recommendations. This drives what you see on Whole Foods and Fresh shelves today.  
+- Led project to create science-based grocery recommendations, working with science, product, and engineering teams. 
+- Developed framework for dynamic and automated store-level experimentation design and evaluation. 
+- Organized a corporate-wide internal conference workshop on the intersection of reinforcement learning and causal inference. 
+<br>
 
 <span class="job-dates">2020 – 2021</span>
 <span class="job-company">Amazon Buyer Risk Prevention</span>, Senior Economist
 
-<li> Economist POC for VP-level guidance on customer impact of fraud actions. </li>
-<li> Developed and led scientists using causal ML heterogeneous treatment effects models. This model won the annual "Above and Beyond" award in the Amazon Economist community.  </li>
-<li> Created scaled solutions for validating treatment effects using observational data. </li>
-<li> Improved organizational knowledge teaching causal inference to scientists and advocating for economics-based solutions </li>
+- Economist POC for VP-level guidance on customer impact of fraud actions. 
+- Developed and led scientists using causal ML heterogeneous treatment effects models. This model won the annual "Above and Beyond" award in the Amazon Economist community.  
+- Created scaled solutions for validating treatment effects using observational data. 
+- Improved organizational knowledge teaching causal inference to scientists and advocating for economics-based solutions 
+<br>
 
 <span class="job-dates">2017 – 2020</span>
 <span class="job-company">College Board</span>, Policy Research Scientist
-
+<ul>
 <li> Evaluated how the AP and dual enrollment programs prepared students for college using matching-based estimators. </li>
 <li> Wrote policy memos for state legislatures about how AP programs expand tax bases through increased education and earnings. </li>
 <li> Led experimental analysis validating a college admissions tool, with results leading to adoption by 100+ colleges. </li>
 <li> Coordinated a machine learning hackathon with researchers and data scientists, comparing decision tree and gradient boosted trees to traditional prediction methods. </li>
+</ul>
+
 
 </div>
 
@@ -70,7 +76,7 @@ title-block-banner: false
 <li>Specializing in Labor Economics, Economics of Education, and Industrial Organization </li>
 
 <span class="job-dates">2011</span>
-<span class="job-title">Cornell University</span>, BS with Honors in Industrial Labor Relations
+<span class="job-company">Cornell University</span>, BS with Honors in Industrial Labor Relations
 </div>
 
 ## Trivia
