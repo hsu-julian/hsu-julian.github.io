@@ -646,10 +646,16 @@ table thead th {
   border-bottom: 0;
 }
 
-.job-entry .job-title {
+.job-entry .job-company {
   color: var(--heading);
   font-weight: 650;
 }
+
+.job-entry .job-title {
+  color: var(--heading);
+  font-weight: 250;
+}
+
 
 .job-entry .job-dates {
   color: var(--accent);
