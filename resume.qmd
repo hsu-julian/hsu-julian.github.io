@@ -57,12 +57,12 @@ title-block-banner: false
 
 <span class="job-dates">2017 – 2020</span>
 <span class="job-company">College Board</span>, Policy Research Scientist
-
-- Evaluated how the AP and dual enrollment programs prepared students for college using matching-based estimators. 
-- Wrote policy memos for state legislatures about how AP programs expand tax bases through increased education and earnings. 
-- Led experimental analysis validating a college admissions tool, with results leading to adoption by 100+ colleges. 
-- Coordinated a machine learning hackathon with researchers and data scientists, comparing decision tree and gradient boosted trees to traditional prediction methods. 
-<br>
+<ul>
+<li> Evaluated how the AP and dual enrollment programs prepared students for college using matching-based estimators. </li>
+<li> Wrote policy memos for state legislatures about how AP programs expand tax bases through increased education and earnings. </li>
+<li> Led experimental analysis validating a college admissions tool, with results leading to adoption by 100+ colleges. </li>
+<li> Coordinated a machine learning hackathon with researchers and data scientists, comparing decision tree and gradient boosted trees to traditional prediction methods. </li>
+</ul>
 
 
 </div>
@@ -76,7 +76,7 @@ title-block-banner: false
 <li>Specializing in Labor Economics, Economics of Education, and Industrial Organization </li>
 
 <span class="job-dates">2011</span>
-<span class="job-title">Cornell University</span>, BS with Honors in Industrial Labor Relations
+<span class="job-company">Cornell University</span>, BS with Honors in Industrial Labor Relations
 </div>
 
 ## Trivia
