@@ -4,14 +4,6 @@ page-layout: article
 title-block-banner: false
 ---
 
-<div class="bio-header">
-<img src="images/profile-placeholder.svg" alt="Julian Hsu">
-<div class="bio-text">
-# Julian Hsu
-<p class="bio-tagline">Economist and Data Tech Enthusiast</p>
-</div>
-</div>
-
 ## Professional Experience
 
 <div class="job-entry">
@@ -56,7 +48,7 @@ title-block-banner: false
 <br>
 
 <span class="job-dates">2017 – 2020</span>
-<span class="job-company">College Board</span>, Policy Research Scientist
+<span class="job-company">College Board</span>, Policy Research Scientistd
 <ul>
 <li> Evaluated how the AP and dual enrollment programs prepared students for college using matching-based estimators. </li>
 <li> Wrote policy memos for state legislatures about how AP programs expand tax bases through increased education and earnings. </li>
