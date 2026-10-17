@@ -9,7 +9,8 @@ title-block-banner: false
 <div class="job-entry">
 <span class="job-dates">2026 </span>
 <span class="job-company">Netflix</span>, Senior Data Scientist
-- Improved AI translation models with experiments, creating AI evaluation metrics, and developing meta-evaluation of LLM judges.  
+
+- Improved AI translation models with experiments, creating AI evaluation metrics and meta-evaluation strategy of LLM judges.  
 - Full stack scoping and developing an AI based translation workflow for Netflix Games support articles.
 
 <br>
