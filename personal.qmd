@@ -4,4 +4,4 @@ page-layout: article
 title-block-banner: false
 ---
 
-&lt;placeholder&gt;
+Coming soon. 
