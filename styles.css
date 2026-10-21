@@ -44,7 +44,6 @@ body {
   --bar-jade: #244C34;
   --bar-jade-deep: #1B3927;
   --ochre-on-bar: #BC9572;
-  --wip-h: 2rem;
 }
 
 ::selection { background: var(--accent); color: var(--bg); }
@@ -865,61 +864,14 @@ table thead th {
   text-transform: uppercase;
 }
 
-/* ---- Work-in-progress banner ------------------------------------- */
-.wip-banner {
-  background: var(--bar-jade-deep);
-  color: #F4F1E6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.68rem;
-  font-weight: 600;
-  height: var(--wip-h);
-  left: 0;
-  letter-spacing: 0.1em;
-  padding: 0 1rem;
-  position: fixed;
-  right: 0;
-  text-align: center;
-  text-transform: uppercase;
-  top: 0;
-  z-index: 1031;
-}
+/* ---- Fixed header ------------------------------------------------ */
 
 #quarto-header.fixed-top {
-  top: var(--wip-h);
-}
-
-/* Headroom hides the bar on scroll-down and returns it on scroll-up.
-   Quarto's own rule is `header.headroom--unpinned { translateY(-100%) }` --
-   100% of the HEADER box only -- but the header sits at top: var(--wip-h)
-   to clear the strip above it, so var(--wip-h) of navbar stayed parked on
-   screen when unpinned. That was invisible while the bar was transparent;
-   opaque, it would leave the ochre rule hanging under the wip strip. Take
-   the header fully clear, and move the strip with it so the two always
-   travel as one piece. */
-@media (prefers-reduced-motion: no-preference) {
-  header#quarto-header.headroom,
-  .wip-banner {
-    transition: transform 200ms linear;
-  }
+  top: 0;
 }
 
 header#quarto-header.headroom--unpinned {
-  transform: translateY(calc(-100% - var(--wip-h)));
-}
-
-body:has(#quarto-header.headroom--unpinned) .wip-banner {
   transform: translateY(-100%);
-}
-
-@media print {
-  .wip-banner { display: none; }
-}
-
-#quarto-content {
-  padding-top: var(--wip-h);
 }
 
 @media (max-width: 600px) {
