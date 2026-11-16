@@ -47,6 +47,8 @@ format:
     page-layout: full
     grid:
       body-width: 850px
+    include-after-body:
+      - asteroids.html
     include-in-header:
       - text: |
           <link rel="preconnect" href="https://fonts.googleapis.com">
