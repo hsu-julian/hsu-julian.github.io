@@ -4,4 +4,10 @@ page-layout: article
 title-block-banner: false
 ---
 
-Coming soon. 
+The net is vast and infinite. Check out these other Julian Hsus!
+
+[Julian Hsu, MD](https://www.linkedin.com/in/julian-hsu-42295a6/)
+
+[Julian Hsu, Software Engineer](https://www.linkedin.com/in/julianhsu/)
+
+Julian Hsu, Underwater Photographer - [here is an example](https://www.uwphotochallenge.com/photodetails.php?id=181)

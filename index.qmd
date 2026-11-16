@@ -16,8 +16,7 @@ title-block-banner: false
 <div class="home-hero">
 <div class="home-hero-copy">
 <p class="home-intro">
-Notes on causal inference, applied econometrics, and machine learning —
-written up as I work through them.
+Notes on causal inference and habitual run-ins with machine learning.
 </p>
 <div class="home-actions">
 <a class="site-pill" href="posts/msprt-vs-fixed-horizon/">Latest Notes</a>

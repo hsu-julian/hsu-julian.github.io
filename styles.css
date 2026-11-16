@@ -132,6 +132,12 @@ h2, .h2 {
   padding-top: 1.2rem;
 }
 
+/* Resume page: keep sections compact instead of the airy default above. */
+main:has(> .job-entry) h2 {
+  margin-top: 1.25rem;
+  padding-top: 0.5rem;
+}
+
 h3, .h3 {
   color: var(--heading);
   font-family: "Source Serif 4", Georgia, serif;
@@ -163,8 +169,15 @@ hr { border-color: var(--border); opacity: 1; }
 /* A single column of copy on the page ground -- no artwork behind it. */
 .home-hero {
   display: block;
-  margin: 0 0 4rem;
-  padding: 3rem 0 3rem;
+  margin: 0 0 1.5rem;
+  padding: 0.5rem 0 1rem;
+}
+
+/* Home page only: pull the hero copy up close to the title and the
+   listing up close to the action pills. */
+main:has(> .home-hero) #title-block-header {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .home-hero .home-intro {
@@ -179,7 +192,7 @@ hr { border-color: var(--border); opacity: 1; }
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  margin-top: 2rem;
+  margin-top: 1.25rem;
 }
 
 /* ---- Category filter chips -----------------------------------------

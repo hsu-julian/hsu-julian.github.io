@@ -10,8 +10,10 @@ title-block-banner: false
 <span class="job-dates">2026 </span>
 <span class="job-company">Netflix</span>, Senior Data Scientist
 
-- Improved AI translation models with experiments, creating AI evaluation metrics and meta-evaluation strategy of LLM judges.  
+- AI evaluations frameworks for translation models using LLM judges and meta evaluation
+- Created AI objective functions using A/B tests and observational causal inference models 
 - Full stack scoping and developing an AI based translation workflow for Netflix Games support articles.
+
 
 <br>
 <span class="job-dates">2024 – 2026</span>
@@ -51,7 +53,7 @@ title-block-banner: false
 <br>
 
 <span class="job-dates">2017 – 2020</span>
-<span class="job-company">College Board</span>, Policy Research Scientistd
+<span class="job-company">College Board</span>, Policy Research Scientist
 <ul>
 <li> Evaluated how the AP and dual enrollment programs prepared students for college using matching-based estimators. </li>
 <li> Wrote policy memos for state legislatures about how AP programs expand tax bases through increased education and earnings. </li>
